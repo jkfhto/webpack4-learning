@@ -7,6 +7,7 @@ var path = require('path')
 
 module.exports = {
     mode: "development",
+    //需要设置多个entry
     entry: {
         'pageA': './src/pageA',
         'pageB': './src/pageB'
