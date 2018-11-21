@@ -1,0 +1,44 @@
+@import './common.less';
+
+@homecolor: #ff3333;
+
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('../assets/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),
+         url('../assets/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), 
+         url('../assets/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), 
+         url('../assets/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), 
+         url('../assets/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.fa-folder:before {
+    content: "\f07b";
+}
+
+html {
+    background: @homecolor;
+}
+
+.box {
+    height: 200px;
+    width: 200px;
+    border-radius: 4px;
+    background: #333;
+}
+
+a.link {
+    transition: transform 1s;
+    width: calc(50% + 1em);
+}
+
