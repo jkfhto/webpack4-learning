@@ -26,9 +26,9 @@ module.exports = {
         app: "./src/app.js",
     },
     output: {
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "dist"), //所有输出文件的目标路径 对应一个绝对路径
         filename: "[name].bundle.js",
-        publicPath: "./dist/", //2 为了使资源保持正确的路径，必须设置 webpack 配置中的 output.publicPath 属性，以便生成绝对路径
+        publicPath: "./dist/", //2 该配置能帮助你为项目中的所有资源指定一个基础路径 基础路径是指项目中引用css，js，img等资源时候的一个基础路径
     },
     module: {
         rules: [
@@ -65,8 +65,8 @@ module.exports = {
                     //     loader:"file-loader",
                     //     options: {
                     //         // name: '[path][name].[ext]',
-                    //         publicPath: '../dist/assets/imgs/', //影响图片的调用路径=output.publicPath+publicPath
-                    //         outputPath: '', //影响文件的打包路径=output.publicPath+outputPath
+                    //         publicPath: 'assets/imgs/', //影响图片的调用路径=output.publicPath+publicPath
+                    //         outputPath: '', //影响文件的打包(输出)路径=output.path+outputPath
                     //         useRelativePath:true,
                     //     }
                     // }
@@ -74,8 +74,8 @@ module.exports = {
                         loader: 'url-loader',
                         options: {
                             limit: 8192, //将文件加载为base64编码的URL
-                            publicPath: '../dist/assets/imgs/', //影响图片的调用路径=output.publicPath+publicPath
-                            outputPath: '', //影响文件的打包路径=output.publicPath+outputPath
+                            publicPath: 'assets/imgs/', //影响图片的调用路径=output.publicPath+publicPath
+                            outputPath: '', //影响文件的打包(输出)路径=output.path+outputPath
                             useRelativePath:true,
                         }
                     }
