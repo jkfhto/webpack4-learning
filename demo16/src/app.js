@@ -1,12 +1,15 @@
 import './css/base.less'
 
 import { a } from "./common/util";
+import {
+    componentA
+} from './components/a'
+
 a()
 
-var app = document.getElementById('app')
-var div = document.createElement('div')
-div.className = 'box'
-app.appendChild(div)
+var app = document.getElementById('one')
+var list = componentA()
+app.appendChild(list)
 
 $('div').addClass('new');
 
@@ -16,3 +19,15 @@ $.get('/api/comments/show', {
 }, function (data) {
     console.log(data)
 })
+
+if (module.hot) {//模块热更新
+    module.hot.accept('./components/a', function () {
+        app.removeChild(list)
+
+        let ComponentA = require('./components/a').componentA
+        let newlist = ComponentA()
+
+        app.appendChild(newlist)
+        list = newlist
+    })
+}

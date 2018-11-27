@@ -24,9 +24,13 @@
  * 4:支持https
  * 5:帮助在浏览器中显示编译错误
  * 6:接口代理 devServer.proxy 进行跨域代理设置 集成自http-proxy-middleware
- * 7:模块热更新 HotModuleReplacementPlugin && NamedModulesPlugin
- * 8. SourceMap: 配置 devtool 选项( 不同的loader也应该打开对应的sourcemap选项 )
- * 9. 开启 HTML5 History API : devServer.historyApiFallback
+ * 7:模块热更新 HotModuleReplacementPlugin && NamedModulesPlugin 注意：css进行模块热更新需要使用style-loader
+ * 8. 开启 HTML5 History API : devServer.historyApiFallback
+ */
+
+/**
+ * devtool: 选择源映射样式以增强调试过程。 这些值可以显着影响构建和重建速度(不同的loader也应该打开对应的sourcemap选项)
+ * https: //webpack.js.org/configuration/devtool/#src/components/Sidebar/Sidebar.jsx
  */
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); //提取css文件  有时会报错 需要安装webpack到开发依赖
@@ -57,6 +61,7 @@ module.exports = {
         filename: "[name].bundle.js",
         publicPath: "/" //2 该配置能帮助你为项目中的所有资源指定一个基础路径 基础路径是指项目中引用css，js，img等资源时候的一个基础路径
     },
+    // devtool: "source-map",
     devServer: { //webpack4 mode设置为production会不停的编译 刷新页面 
         port: 6288,
         // inline: false,
@@ -84,6 +89,8 @@ module.exports = {
                 }
             }
         },
+        hot: true,
+        hotOnly: true,
     },
     resolve: {
         alias: {
@@ -252,6 +259,9 @@ module.exports = {
             }
         }),
         new CleanWebpackPlugin(["dist"]),
+        new webpack.HotModuleReplacementPlugin(),
+
+        new webpack.NamedModulesPlugin(),
         purifyCSS
     ]
 };
