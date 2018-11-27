@@ -1,6 +1,6 @@
 import '../css/components/a.less'
 
-export function componentA() {
+export function componentA () {
     let ul = document.createElement('ul')
 
     ul.innerHTML = `
@@ -11,5 +11,4 @@ export function componentA() {
     `
 
     return ul
-
 }

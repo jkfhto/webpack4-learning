@@ -1,6 +1,6 @@
 import './css/base.less'
 
-import { a } from "./common/util";
+import { a } from './common/util'
 import {
     componentA
 } from './components/a'
@@ -11,7 +11,7 @@ var app = document.getElementById('one')
 var list = componentA()
 app.appendChild(list)
 
-$('div').addClass('new');
+$('div').addClass('new')
 
 $.get('/api/comments/show', {
     id: '4193586758833502',
@@ -20,7 +20,7 @@ $.get('/api/comments/show', {
     console.log(data)
 })
 
-if (module.hot) {//模块热更新
+if (module.hot) { // 模块热更新
     module.hot.accept('./components/a', function () {
         app.removeChild(list)
 

@@ -17,7 +17,7 @@
  */
 
 /**
- * webpack-dev-server: 
+ * webpack-dev-server:
  * 1:live reloading 触发自动刷新页面
  * 2:不能打包文件 运行webpack-dev-server整体文件打包在运行内存中，不能直接打包文件
  * 3:路径重定向
@@ -32,37 +32,37 @@
  * devtool: 选择源映射样式以增强调试过程。 这些值可以显着影响构建和重建速度(不同的loader也应该打开对应的sourcemap选项)
  * https: //webpack.js.org/configuration/devtool/#src/components/Sidebar/Sidebar.jsx
  */
-const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin"); //提取css文件  有时会报错 需要安装webpack到开发依赖
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require('html-webpack-plugin'); //该插件将为你生成一个 HTML5 文件， 其中包括使用 script 标签的 body 中的所有 webpack 包
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const path = require('path')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 提取css文件  有时会报错 需要安装webpack到开发依赖
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin') // 该插件将为你生成一个 HTML5 文件， 其中包括使用 script 标签的 body 中的所有 webpack 包
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 /**
  * 使用purifycss-webpack，glob-all，purify-css进行css tree-shaking 需要将css-loader modules设置为false
  */
-const PurifyCSS = require("purifycss-webpack");
-const glob = require("glob-all");
+const PurifyCSS = require('purifycss-webpack')
+const glob = require('glob-all')
 
 let purifyCSS = new PurifyCSS({
     paths: glob.sync([
         // 要做CSS Tree Shaking的路径文件
-        path.resolve(__dirname, "./*.html"),
-        path.resolve(__dirname, "./src/*.js")
+        path.resolve(__dirname, './*.html'),
+        path.resolve(__dirname, './src/*.js')
     ])
-});
+})
 
 module.exports = {
-    mode: "development", //webpack4 设置为production即可进行JS代码压缩以及tree shaking
+    mode: 'development', // webpack4 设置为production即可进行JS代码压缩以及tree shaking
     entry: {
-        app: "./src/app.js"
+        app: './src/app.js'
     },
     output: {
-        path: path.resolve(__dirname, "dist"), //所有输出文件的目标路径 对应一个绝对路径
-        filename: "[name].bundle.js",
-        publicPath: "/" //2 该配置能帮助你为项目中的所有资源指定一个基础路径 基础路径是指项目中引用css，js，img等资源时候的一个基础路径
+        path: path.resolve(__dirname, 'dist'), // 所有输出文件的目标路径 对应一个绝对路径
+        filename: '[name].bundle.js',
+        publicPath: '/' // 2 该配置能帮助你为项目中的所有资源指定一个基础路径 基础路径是指项目中引用css，js，img等资源时候的一个基础路径
     },
     // devtool: "source-map",
-    devServer: { //webpack4 mode设置为production会不停的编译 刷新页面 
+    devServer: { // webpack4 mode设置为production会不停的编译 刷新页面
         port: 6288,
         // inline: false,
         // HTML5 histroy API rewrite
@@ -76,7 +76,7 @@ module.exports = {
                 }
             }]
         },
-        proxy: {//代理远程接口
+        proxy: { // 代理远程接口
             '/api': {
                 target: 'https://m.weibo.cn',
                 changeOrigin: true,
@@ -90,178 +90,188 @@ module.exports = {
             }
         },
         hot: true,
-        hotOnly: true,
+        hotOnly: true
     },
     resolve: {
         alias: {
-            jquery$: path.resolve(__dirname, "./src/libs/jquery.min.js") //设置本地jquery的解析路径
+            jquery$: path.resolve(__dirname, './src/libs/jquery.min.js') // 设置本地jquery的解析路径
         }
     },
     module: {
         rules: [{
-                test: /\.js$/,
-                exclude: /(node_modules)/,
-                use: {
-                    loader: "babel-loader",
+            test: /\.js$/,
+            include: [path.resolve(__dirname, 'src')],
+            exclude: [path.resolve(__dirname, 'src/libs')],
+            // exclude: /(node_modules)/,
+            use: [
+                {
+                    loader: 'babel-loader',
                     options: {
-                        presets: ["env"]
+                        presets: ['env']
                     }
+                },
+                {
+                    loader: 'eslint-loader',
+                    options: {
+                        formatter: require('eslint-friendly-formatter')
+                    }
+                }
+            ]
+        },
+        {
+            test: /\.(c|le)ss$/,
+            use: [{
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                    // you can specify a publicPath here
+                    // by default it use publicPath in webpackOptions.output
+                    publicPath: ''
                 }
             },
             {
-                test: /\.(c|le)ss$/,
-                use: [{
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            // you can specify a publicPath here
-                            // by default it use publicPath in webpackOptions.output
-                            publicPath: ""
-                        }
-                    },
-                    {
-                        loader: "css-loader", //1
-                        // loader: "file-loader", //2
-                        // loader: "css-loader", //3
-                        options: {
-                            // import: false,//设置false modules: true,失效
-                            // modules: true,// css tree-shaking 不能开启模块化
-                            // minimize: true || { /* CSSNano Options */ }, //最新版已经弃用
-                            localIdentName: "[path][name]__[local]--[hash:base64:5]"
-                        }
-                    },
-                    {
-                        //注意：postcss-loader 需要放在less-loader之前 并且是匹配css，less等文件 不能放在处理图片文件规则中
-                        loader: "postcss-loader",
-                        options: {
-                            ident: "postcss",
-                            plugins: [
-                                require("postcss-sprites")({
-                                    retina: true //开启retina
-                                })
-                            ]
-                        }
-                    },
-                    {
-                        loader: "less-loader"
-                    }
-                ]
+                loader: 'css-loader', // 1
+                // loader: "file-loader", //2
+                // loader: "css-loader", //3
+                options: {
+                    // import: false,//设置false modules: true,失效
+                    // modules: true,// css tree-shaking 不能开启模块化
+                    // minimize: true || { /* CSSNano Options */ }, //最新版已经弃用
+                    localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                }
             },
             {
-                //打包处理图片文件
-                test: /\.(png|jpg|jpeg|gif)$/,
-                use: [
-                    // {
-                    //     loader:"file-loader",
-                    //     options: {
-                    //         // name: '[path][name].[ext]',
-                    //         publicPath: '', //影响图片等静态资源的调用路径=output.publicPath+publicPath
-                    //         outputPath: './assets/imgs/', //影响文件的打包(输出)路径=output.path+outputPath
-                    //         useRelativePath:true,//影响文件的打包路径
-                    //     }
-                    // }
-                    {
-                        loader: "url-loader",
-                        options: {
-                            limit: 1024, //将文件加载为base64编码的URL
-                            publicPath: "", //影响图片等静态资源的调用路径=output.publicPath+publicPath
-                            outputPath: "./assets/imgs/" //影响文件的打包(输出)路径=output.path+outputPath
-                            // useRelativePath: true, //影响文件的打包路径
-                        }
-                    },
-                    {
-                        //压缩图片
-                        loader: "img-loader",
-                        options: {
-                            plugins: [
-                                require("imagemin-gifsicle")({
-                                    interlaced: false,
-                                    optimizationLevel: 3
-                                }),
-                                require("imagemin-mozjpeg")({
-                                    progressive: true,
-                                    arithmetic: false
-                                }),
-                                require("imagemin-pngquant")({
-                                    floyd: 0.5,
-                                    quality: 50,
-                                    speed: 2
-                                }),
-                                require("imagemin-svgo")({
-                                    plugins: [{
-                                            removeTitle: true
-                                        },
-                                        {
-                                            convertPathData: false
-                                        }
-                                    ]
-                                })
-                            ]
-                        }
-                    }
-                ]
+                // 注意：postcss-loader 需要放在less-loader之前 并且是匹配css，less等文件 不能放在处理图片文件规则中
+                loader: 'postcss-loader',
+                options: {
+                    ident: 'postcss',
+                    plugins: [
+                        require('postcss-sprites')({
+                            retina: true // 开启retina
+                        })
+                    ]
+                }
             },
             {
-                //处理字体文件
-                test: /\.(eot|woff2?|ttf|svg)$/,
-                use: [{
-                    loader: "url-loader",
-                    options: {
-                        name: "[name].[ext]",
-                        limit: 5000,
-                        publicPath: "./assets/fonts/", //影响图片等静态资源的调用路径=output.publicPath+publicPath
-                        outputPath: "", //影响文件的打包(输出)路径=output.path+outputPath
-                        useRelativePath: true //影响文件的打包路径
-                    }
-                }]
-            },
-            {
-                test: path.resolve(__dirname, "src/app.js"),
-                use: [{
-                    // 使用 imports-loader 注入
-                    loader: "imports-loader",
-                    options: {
-                        $: "jquery",
-                        jQuery: "jquery"
-                    }
-                }]
-            },
-            {
-                test: /\.html$/,
-                use: [{
-                    loader: "html-loader",
-                    options: {
-                        attrs: ["img:data-src", "img:src"]
-                    }
-                }]
+                loader: 'less-loader'
             }
+            ]
+        },
+        {
+            // 打包处理图片文件
+            test: /\.(png|jpg|jpeg|gif)$/,
+            use: [
+                // {
+                //     loader:"file-loader",
+                //     options: {
+                //         // name: '[path][name].[ext]',
+                //         publicPath: '', //影响图片等静态资源的调用路径=output.publicPath+publicPath
+                //         outputPath: './assets/imgs/', //影响文件的打包(输出)路径=output.path+outputPath
+                //         useRelativePath:true,//影响文件的打包路径
+                //     }
+                // }
+                {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 1024, // 将文件加载为base64编码的URL
+                        publicPath: '', // 影响图片等静态资源的调用路径=output.publicPath+publicPath
+                        outputPath: './assets/imgs/' // 影响文件的打包(输出)路径=output.path+outputPath
+                        // useRelativePath: true, //影响文件的打包路径
+                    }
+                },
+                {
+                    // 压缩图片
+                    loader: 'img-loader',
+                    options: {
+                        plugins: [
+                            require('imagemin-gifsicle')({
+                                interlaced: false,
+                                optimizationLevel: 3
+                            }),
+                            require('imagemin-mozjpeg')({
+                                progressive: true,
+                                arithmetic: false
+                            }),
+                            require('imagemin-pngquant')({
+                                floyd: 0.5,
+                                quality: 50,
+                                speed: 2
+                            }),
+                            require('imagemin-svgo')({
+                                plugins: [{
+                                    removeTitle: true
+                                },
+                                {
+                                    convertPathData: false
+                                }
+                                ]
+                            })
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            // 处理字体文件
+            test: /\.(eot|woff2?|ttf|svg)$/,
+            use: [{
+                loader: 'url-loader',
+                options: {
+                    name: '[name].[ext]',
+                    limit: 5000,
+                    publicPath: './assets/fonts/', // 影响图片等静态资源的调用路径=output.publicPath+publicPath
+                    outputPath: '', // 影响文件的打包(输出)路径=output.path+outputPath
+                    useRelativePath: true // 影响文件的打包路径
+                }
+            }]
+        },
+        {
+            test: path.resolve(__dirname, 'src/app.js'),
+            use: [{
+                // 使用 imports-loader 注入
+                loader: 'imports-loader',
+                options: {
+                    $: 'jquery',
+                    jQuery: 'jquery'
+                }
+            }]
+        },
+        {
+            test: /\.html$/,
+            use: [{
+                loader: 'html-loader',
+                options: {
+                    attrs: ['img:data-src', 'img:src']
+                }
+            }]
+        }
         ]
     },
     plugins: [
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
-            filename: "[name].css",
-            chunkFilename: "[id].css"
+            filename: '[name].css',
+            chunkFilename: '[id].css'
         }),
         // new webpack.ProvidePlugin({ //处理第三方js库 方式1：直接npm i jquery;方式2：本地文件，使用resolve设置jquery解析路径  问题：没有tree-shaking
         //     $: 'jquery',
         //     jQuery: 'jquery'
         // }),
         new HtmlWebpackPlugin({
-            filename: "./indexW.html", //生成的html文件名称
-            template: "./index.html", //模板文件
+            filename: './indexW.html', // 生成的html文件名称
+            template: './index.html', // 模板文件
             // publicPath: '../', //影响图片等静态资源的调用路径=output.publicPath+publicPath
             inject: false,
             hash: true, // inject:false,将导致hash失效
             minify: {
-                //压缩html代码
+                // 压缩html代码
                 collapseWhitespace: false
             }
         }),
-        new CleanWebpackPlugin(["dist"]),
+        new CleanWebpackPlugin(['dist']),
         new webpack.HotModuleReplacementPlugin(),
 
         new webpack.NamedModulesPlugin(),
         purifyCSS
     ]
-};
+}
