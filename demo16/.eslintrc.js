@@ -2,7 +2,7 @@ module.exports = {
     root: true,
     extends: 'standard',
     plugins: [
-        // 'html'
+        'html'
     ],
     env: {
         browser: true,
