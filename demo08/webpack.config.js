@@ -1,9 +1,11 @@
+/**
+ * 使用mini-css-extract-plugin 合并css，less代码
+ * https://webpack.js.org/plugins/mini-css-extract-plugin/#src/components/Sidebar/Sidebar.jsx
+ * 使用purifycss - webpack， glob - all进行css tree - shaking 需要将css - loader modules设置为false
+ */
 var path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); //提取css文件  有时会报错 需要安装webpack到开发依赖
 
-/**
- * 使用purifycss-webpack，glob-all进行css tree-shaking 需要将css-loader modules设置为false
- */
 const PurifyCSS = require("purifycss-webpack");
 const glob = require("glob-all");
 
@@ -24,7 +26,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "[name].bundle.js",
-        publicPath: "./dist/", //2 为了使资源保持正确的路径，必须设置 webpack 配置中的 output.publicPath 属性，以便生成绝对路径
+        publicPath: "./dist/", //2 该配置能帮助你为项目中的所有资源指定一个基础路径 基础路径是指项目中引用css，js，img等资源时候的一个基础路径
     },
     module: {
         rules: [{
