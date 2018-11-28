@@ -12,7 +12,12 @@ var CleanWebpackPlugin = require('clean-webpack-plugin')
 
 var path = require('path')
 var glob = require('glob-all')
-
+let pathsToClean = [
+    './dist'
+]
+let cleanOptions = {
+    root: path.resolve(__dirname, '../dist')
+}
 module.exports = {
     plugins: [
         new PurifyWebpack({
@@ -37,6 +42,6 @@ module.exports = {
             filename: '[name].css',
             chunkFilename: '[id].css'
         }),
-        new CleanWebpackPlugin(path.resolve(__dirname, '../dist'))
+        new CleanWebpackPlugin(pathsToClean, cleanOptions)
     ]
 }
