@@ -31,7 +31,7 @@ module.exports = {
                         // import: false,//设置false modules: true,失效
                         modules: true,
                         // minimize: true || { /* CSSNano Options */ }, //最新版已经弃用
-                        localIdentName: '[path][name]__[local]--[hash:base64:5]',
+                        localIdentName: '[path][name]__[local]--[hash:base64:5]',//定义打包后的样式名称生成规则
                     }
                 }, {
                     loader: "less-loader",
