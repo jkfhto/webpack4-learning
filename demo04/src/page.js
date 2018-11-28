@@ -1,6 +1,6 @@
 /**
  * requir.ensure(): 只是加载模块但是并不执行
- * import(): 加载模块并且自动执行
+ * import(): 加载模块并且自动执行 webpackChunkName: ChunkName相同将打包成一个Chunk
  */
 
  require.include("./moduleA.js"); // 提取subPageA和subPageB的公共代码moduleA  单个entry
