@@ -1,8 +1,11 @@
 /**
  * 使用mini-css-extract-plugin 合并css，less代码
- * https: //webpack.js.org/plugins/mini-css-extract-plugin/#src/components/Sidebar/Sidebar.jsx
+ * https://webpack.js.org/plugins/mini-css-extract-plugin/#src/components/Sidebar/Sidebar.jsx
  * 使用optimize-css-assets-webpack-plugin 优化，去重css，less代码
- * https: //www.npmjs.com/package/optimize-css-assets-webpack-plugin
+ * https://www.npmjs.com/package/optimize-css-assets-webpack-plugin
+ * 设置optimization.minimizer会覆盖webpack提供的默认值， 因此请务必同时指定JS minimalizer
+ * uglifyjs-webpack-plugin
+ * https://webpack.js.org/plugins/uglifyjs-webpack-plugin/#src/components/Sidebar/Sidebar.jsx
  */
 var path = require("path");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
@@ -21,11 +24,11 @@ module.exports = {
     },
     optimization: {
         minimizer: [
-            // new UglifyJsPlugin({
-            //     cache: true,
-            //     parallel: true,
-            //     sourceMap: true // set to true if you want JS source maps
-            // }),
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true,
+                sourceMap: true // set to true if you want JS source maps
+            }),
             new OptimizeCSSAssetsPlugin({})
         ]
     },
