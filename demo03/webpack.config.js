@@ -1,6 +1,8 @@
 /**
- * 使用SplitChunksPlugin进行提取公共代码
+ * 使用SplitChunksPlugin进行提取公共代码 可用于单页面和多页面
  * https://webpack.js.org/plugins/split-chunks-plugin/#src/components/Sidebar/Sidebar.jsx
+ * 1:减少代码冗余
+ * 2:提高加载速度
  */
 // var webpack = require('webpack')
 var path = require('path')
