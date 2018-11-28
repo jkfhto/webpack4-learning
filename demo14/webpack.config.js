@@ -5,11 +5,11 @@
  * 3. postcss-loader 与 postcss-sprites: 合成雪碧图, 减小HTTP请求. 注意合成后的图片文件大小.
  */
 
- /**
-  * 引入第三方JS库
-  * 1. webpack.ProvidePlugin
-  * 2. imports-loader
-  */
+/**
+ * 引入第三方JS库
+ * 1. webpack.ProvidePlugin
+ * 2. imports-loader
+ */
 
 /**
  * 1. clean-webpack-plugin: 一个webpack插件，用于在构建之前删除/清除构建文件夹
@@ -27,11 +27,11 @@ const PurifyCSS = require("purifycss-webpack");
 const glob = require("glob-all");
 
 let purifyCSS = new PurifyCSS({
-    paths: glob.sync([
-        // 要做CSS Tree Shaking的路径文件
-        path.resolve(__dirname, "./*.html"),
-        path.resolve(__dirname, "./src/*.js")
-    ])
+  paths: glob.sync([
+    // 要做CSS Tree Shaking的路径文件
+    path.resolve(__dirname, "./*.html"),
+    path.resolve(__dirname, "./src/*.js")
+  ])
 });
 
 module.exports = {
@@ -50,8 +50,7 @@ module.exports = {
     }
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.js$/,
         exclude: /(node_modules)/,
         use: {
@@ -63,8 +62,7 @@ module.exports = {
       },
       {
         test: /\.(c|le)ss$/,
-        use: [
-          {
+        use: [{
             loader: MiniCssExtractPlugin.loader,
             options: {
               // you can specify a publicPath here
@@ -141,8 +139,7 @@ module.exports = {
                   speed: 2
                 }),
                 require("imagemin-svgo")({
-                  plugins: [
-                    {
+                  plugins: [{
                       removeTitle: true
                     },
                     {
@@ -158,43 +155,37 @@ module.exports = {
       {
         //处理字体文件
         test: /\.(eot|woff2?|ttf|svg)$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              name: "[name].[ext]",
-              limit: 5000,
-              publicPath: "./assets/fonts/", //影响图片等静态资源的调用路径=output.publicPath+publicPath
-              outputPath: "", //影响文件的打包(输出)路径=output.path+outputPath
-              useRelativePath: true //影响文件的打包路径
-            }
+        use: [{
+          loader: "url-loader",
+          options: {
+            name: "[name].[ext]",
+            limit: 5000,
+            publicPath: "./assets/fonts/", //影响图片等静态资源的调用路径=output.publicPath+publicPath
+            outputPath: "", //影响文件的打包(输出)路径=output.path+outputPath
+            useRelativePath: true //影响文件的打包路径
           }
-        ]
+        }]
       },
       {
         test: path.resolve(__dirname, "src/app.js"),
-        use: [
-          {
-            // 使用 imports-loader 注入
-            loader: "imports-loader",
-            options: {
-              $: "jquery",
-              jQuery: "jquery"
-            }
+        use: [{
+          // 使用 imports-loader 注入
+          loader: "imports-loader",
+          options: {
+            $: "jquery",
+            jQuery: "jquery"
           }
-        ]
+        }]
       },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: "html-loader",
-            options: {
-              attrs: ["img:data-src", "img:src"]
-            }
-          }
-        ]
-      }
+    //   {//自动生成HTML并在HTML中引入图片  webpack4:可以直接引入图片
+    //     test: /\.html$/,
+    //     use: [{
+    //       loader: "html-loader",
+    //       options: {
+    //         attrs: ["img:data-src", "img:src"]
+    //       }
+    //     }]
+    //   }
     ]
   },
   plugins: [
