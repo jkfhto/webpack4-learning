@@ -171,17 +171,17 @@ module.exports = {
                     }
                 }]
             },
-            {
-                test: /\.html$/,
-                use: [
-                    {
-                        loader:"html-loader",
-                        options:{
-                            attrs: ['img:data-src', 'img:src'],
-                        }
-                    }
-                ]
-            }
+            // {//自动生成HTML并在HTML中引入图片  webpack4:可以直接引入图片
+            //     test: /\.html$/,
+            //     use: [
+            //         {
+            //             loader:"html-loader",
+            //             options:{
+            //                 attrs: ['img:data-src', 'img:src'],
+            //             }
+            //         }
+            //     ]
+            // }
         ]
     },
     plugins: [
