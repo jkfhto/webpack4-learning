@@ -9,7 +9,7 @@
  */
 var path = require("path");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");//提取css文件
+const MiniCssExtractPlugin = require("mini-css-extract-plugin"); //提取css文件
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
@@ -22,21 +22,20 @@ module.exports = {
         filename: "[name].bundle.js",
         publicPath: "./dist/" //2 为了使资源保持正确的路径，必须设置 webpack 配置中的 output.publicPath 属性，以便生成绝对路径
     },
-    optimization: {
+    optimization: { //优化项 设置optimization.minimizer会覆盖webpack提供的默认值， 因此请务必同时指定JS minimalizer
         minimizer: [
-            new UglifyJsPlugin({
+            new UglifyJsPlugin({ //优化js代码
                 cache: true,
                 parallel: true,
                 sourceMap: true // set to true if you want JS source maps
             }),
-            new OptimizeCSSAssetsPlugin({})
+            new OptimizeCSSAssetsPlugin({}) //优化css代码，
         ]
     },
     module: {
         rules: [{
             test: /\.(le|c)ss$/,
-            use: [
-                {
+            use: [{
                     loader: MiniCssExtractPlugin.loader,
                     // options: {
                     //     // you can specify a publicPath here
@@ -48,11 +47,11 @@ module.exports = {
                     loader: "css-loader",
                     options: {
                         // import: false,//设置false modules: true,失效
-                        modules: true,//开启css模块化
+                        modules: true, //开启css模块化
                         // minimize: true || { /* CSSNano Options */ }, //最新版已经弃用
-                        localIdentName: '[path][name]__[local]--[hash:base64:5]',//className
+                        localIdentName: '[path][name]__[local]--[hash:base64:5]', //className
                     }
-                },{
+                }, {
                     loader: "less-loader",
                 }
             ]
