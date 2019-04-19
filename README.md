@@ -22,10 +22,8 @@
 * source-map - 定义源码以及打包后的代码的映射关系 [介绍](https://blog.teamtreehouse.com/introduction-source-maps)<br>
 
 **devServer<br>**
-webpack-dev-server 能够用于快速开发应用程序 [详情](https://webpack.js.org/configuration/dev-server/)<br>
-每次要编译代码时，手动运行 npm run build 就会变得很麻烦。<br>
-
-webpack 中有几个不同的选项，可以帮助你在代码发生变化后自动编译代码：<br>
+webpack-dev-server 能够用于快速开发应用程序，会将打包后的文件保存在内存中，不会放在指定文件夹，从而提升打包速度 [详情](https://webpack.js.org/configuration/dev-server/)<br>
+每次要编译代码时，手动运行 npm run build 就会变得很麻烦。webpack 中有几个不同的选项，可以帮助你在代码发生变化后自动编译代码：<br>
 
 * webpack's Watch Mode [详情](https://webpack.js.org/guides/development/#using-watch-mode)<br>
 * webpack-dev-server [详情](https://webpack.js.org/guides/development/#using-webpack-dev-server)<br>
