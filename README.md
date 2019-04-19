@@ -42,6 +42,7 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
 * babel-polyfill缺点：<br>
     1：可能会增加很多根本没有用到的polyfill；[解决方法](https://babeljs.io/docs/en/babel-preset-env#usebuiltins)<br>
     2：可能会污染子模块的局部作用域，严重的或许会导致冲突，旨在用于应用程序而不是库/工具；<br>
+* babel/plugin-transform-runtime：将开发者依赖的全局内置对象等，抽取成单独的模块，并通过模块导入的方式引入，避免了对全局作用域的修改（污染）,同时能按需注入polyfill；[详情](https://babeljs.io/docs/en/babel-plugin-transform-runtime)<br>
 
 
 
