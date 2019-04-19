@@ -33,16 +33,15 @@ webpack-dev-server 能够用于快速开发应用程序，会将打包后的文�
 # 转换es6
 
 **Babel <br>**
-Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中 [详情](https://babeljs.io/docs/en/)<br>
+Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中 [详情](https://babeljs.io/docs/en/)<br><br>
 [让Babel与你所使用的工具协同工作](https://babeljs.io/setup)<br>
 * babel-loader：结合webpack实现es6语法转化 <br>
 * babel/core：Babel核心库，babel-loader内部会调用@babel/core进行转化 <br>
 * babel-preset-env：包含es6、7等版本的语法转化规则 [详情](https://babeljs.io/docs/en/babel-preset-env)<br>
-* babel-polyfill：Babel默认只转换新的JavaScript句法（syntax），而不转换新的API，比如Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象，以及一些定义在全局对象上的方法（比如Object.assign）都不会转码。<br>
-举例来说，ES6在Array对象上新增了Array.from方法。Babel就不会转码这个方法。如果想让这个方法运行，必须使用babel-polyfill，为当前环境提供一个垫片 [详情](https://babeljs.io/docs/en/babel-polyfill)<br>
-* babel-polyfill缺点：
-1：可能会增加很多根本没有用到的polyfill；[解决方法](https://babeljs.io/docs/en/babel-preset-env#usebuiltins)<br>
-2：可能会污染子模块的局部作用域，严重的或许会导致冲突，旨在用于应用程序而不是库/工具；<br>
+* babel-polyfill：Babel默认只转换新的JavaScript句法（syntax），而不转换新的API，比如Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象，以及一些定义在全局对象上的方法（比如Object.assign）都不会转码。举例来说，ES6在Array对象上新增了Array.from方法。Babel就不会转码这个方法。如果想让这个方法运行，必须使用babel-polyfill，为当前环境提供一个垫片 [详情](https://babeljs.io/docs/en/babel-polyfill)<br>
+* babel-polyfill缺点：<br>
+    1：可能会增加很多根本没有用到的polyfill；[解决方法](https://babeljs.io/docs/en/babel-preset-env#usebuiltins)<br>
+    2：可能会污染子模块的局部作用域，严重的或许会导致冲突，旨在用于应用程序而不是库/工具；<br>
 
 
 
