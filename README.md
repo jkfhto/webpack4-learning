@@ -15,5 +15,5 @@
 **plugins<br>**
 插件目的在于解决 loader 无法实现的其他事，让打包的过程更加便捷，可以在webpack运行到某个时刻的时候，帮你做一些事情<br>
 * html-webpack-plugin - 打包之后自动生成一个 HTML 文件， 并把打包生成的js文件自动引入到这个html文件中  [详情](https://webpack.js.org/loaders/file-loader)<br>
-* html-webpack-plugin - 用于打包之前，删除/清除构建文件夹  [详情](https://www.npmjs.com/package/clean-webpack-plugin)<br>
+* clean-webpack-plugin - 用于打包之前，删除/清除构建文件夹  [详情](https://www.npmjs.com/package/clean-webpack-plugin)<br>
 
