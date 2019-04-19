@@ -16,6 +16,7 @@
 插件目的在于解决 loader 无法实现的其他事，让打包的过程更加便捷，可以在webpack运行到某个时刻的时候，帮你做一些事情 [详情](https://webpack.js.org/plugins)<br>
 * html-webpack-plugin - 打包之后自动生成一个 HTML 文件， 并把打包生成的js文件自动引入到这个html文件中  [详情](https://webpack.js.org/loaders/file-loader)<br>
 * clean-webpack-plugin - 用于打包之前，删除/清除构建文件夹  [详情](https://www.npmjs.com/package/clean-webpack-plugin)<br>
+* HotModuleReplacementPlugin - 启用热替换模块(Hot Module Replacement)，也被称为 HMR，实时预览修改后的页面，无需重新加载整个页面  [详情](https://webpack.js.org/plugins/hot-module-replacement-plugin)<br> [API](https://webpack.js.org/api/hot-module-replacement)
 
 **devtool<br>**
 此选项控制是否生成，以及如何生成 source-map [详情](https://webpack.js.org/configuration/devtool)<br>
