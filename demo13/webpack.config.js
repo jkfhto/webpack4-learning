@@ -14,7 +14,7 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); //提取css文件  有时会报错 需要安装webpack到开发依赖
 const webpack = require("webpack");
 
-const HtmlWebpackPlugin = require('html-webpack-plugin'); //该插件将为你生成一个 HTML5 文件， 其中包括使用 script 标签的 body 中的所有 webpack 包
+const HtmlWebpackPlugin = require('html-webpack-plugin'); //该插件将为你自动生成一个 HTML 文件， 并把打包生成的js文件自动引入到这个html文件中
 
 /**
  * 使用purifycss-webpack，glob-all，purify-css进行css tree-shaking 需要将css-loader modules设置为false
