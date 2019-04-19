@@ -41,8 +41,8 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
 * babel-polyfill：Babel默认只转换新的JavaScript句法（syntax），而不转换新的API，比如Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象，以及一些定义在全局对象上的方法（比如Object.assign）都不会转码。举例来说，ES6在Array对象上新增了Array.from方法。Babel就不会转码这个方法。如果想让这个方法运行，必须使用babel-polyfill，为当前环境提供一个垫片 [详情](https://babeljs.io/docs/en/babel-polyfill)<br>
 * babel-polyfill缺点：<br>
     1：可能会增加很多根本没有用到的polyfill；[解决方法](https://babeljs.io/docs/en/babel-preset-env#usebuiltins)<br>
-    2：可能会污染子模块的局部作用域，严重的或许会导致冲突，旨在用于应用程序而不是库/工具；<br>
-* babel/plugin-transform-runtime：将开发者依赖的全局内置对象等，抽取成单独的模块，并通过模块导入的方式引入，避免了对全局作用域的修改（污染）,同时能按需注入polyfill；[详情](https://babeljs.io/docs/en/babel-plugin-transform-runtime)<br>
+    2：可能会污染子模块的局部作用域，严重的或许会导致冲突，旨在用于应用程序，业务逻辑而不是库/工具；<br>
+* babel/plugin-transform-runtime：将开发者依赖的全局内置对象等，抽取成单独的模块，并通过模块导入的方式引入，避免了对全局作用域的修改（污染），同时能按需注入polyfill；[详情](https://babeljs.io/docs/en/babel-plugin-transform-runtime)<br>
 
 
 
