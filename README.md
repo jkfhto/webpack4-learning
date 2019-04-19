@@ -30,4 +30,10 @@ webpack-dev-server 能够用于快速开发应用程序，会将打包后的文�
 * webpack-dev-server [详情](https://webpack.js.org/guides/development/#using-webpack-dev-server)<br>
 * webpack-dev-middleware [详情](https://webpack.js.org/guides/development/#using-webpack-dev-middleware)<br>
 
+# 转换es6
+
+**Babel <br>**
+Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中[详情](https://babeljs.io/docs/en/)<br>
+
+
 
