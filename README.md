@@ -87,6 +87,7 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
 * 动态导入：通过模块的内联函数调用来分离代码。 [了解更多](https://webpack.js.org/guides/code-splitting/#dynamic-imports)<br> 
 
 # css文件代码分割
+注意：对css代码进行代码分割，需要配置sideEffects，消除tree shaking的影响  如果sideEffects：false，css代码会被过滤掉
 * MiniCssExtractPlugin：将CSS提取为独立的文件的插件，对每个包含css的js文件都会创建一个CSS文件，支持按需加载css和sourceMap [了解更多](https://webpack.js.org/plugins/mini-css-extract-plugin) <br>
 * OptimizeCSSAssetsPlugin：css代码压缩优化，[了解更多](https://github.com/NMFR/optimize-css-assets-webpack-plugin)<br>
 [演示代码](./code_splitting_css)<br>
