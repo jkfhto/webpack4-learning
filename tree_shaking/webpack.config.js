@@ -20,6 +20,6 @@ module.exports = {
         filename: '[name].bundle.js'
     },
     // optimization: {
-    //     usedExports: true,
+    //     usedExports: true, //用于开发模式 tree shaking
     // }
 }
