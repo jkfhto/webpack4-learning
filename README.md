@@ -89,6 +89,13 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
 # Bundle Analysis
 如果我们以分离代码作为开始，那么就以检查模块作为结束，分析输出结果是很有用处的。[官方分析工具](https://github.com/webpack/analyse) 是一个好的初始选择 [了解更多](https://webpack.js.org/guides/code-splitting/#bundle-analysis)<br>
 
+# Prefetching/Preloading [了解更多](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)
+Preload是预加载，PreFetch是预测将要加载的模块，这两者都是link标签下的属性<br>
+Preload优先级比PreFetch高。这两者是有区别的：<br>
+* preload：主要是用于当前页面的预加载，会和主文件bundle.js并行下载，且优先获取，可用于预加载某些必要模块<br>
+* prefetch: 主要是用于下一步操作或者页面，会在浏览器空闲时间才去下载，优先级低<br>
+[了解更多](https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485614&amp;idx=1&amp;sn=b25bac7cfbb02bdcab76b41f10a4bffb&source=41#wechat_redirect)<br>
+
 # Lazy Loading
 懒加载或者按需加载，是一种很好的优化网页或应用的方式。这种方式实际上是先把你的代码在一些逻辑断点处分离开，然后在一些代码块中完成某些操作后，立即引用或即将引用另外一些新的代码块。这样加快了应用的初始加载速度，减轻了它的总体体积，因为某些代码块可能永远不会被加载。 [了解更多](https://webpack.js.org/guides/lazy-loading) [演示代码](./lazy_loading)<br>
 
