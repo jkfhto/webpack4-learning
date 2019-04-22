@@ -90,7 +90,7 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
 如果我们以分离代码作为开始，那么就以检查模块作为结束，分析输出结果是很有用处的。[官方分析工具](https://github.com/webpack/analyse) 是一个好的初始选择 [了解更多](https://webpack.js.org/guides/code-splitting/#bundle-analysis)<br>
 
 # Prefetching/Preloading 
-Preload是预加载，PreFetch是预测将要加载的模块，这两者都是link标签下的属性 [了解更多](https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485614&amp;idx=1&amp;sn=b25bac7cfbb02bdcab76b41f10a4bffb&source=41#wechat_redirect) [使用](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules)<br>
+Preload是预加载，PreFetch是预测将要加载的模块，这两者都是link标签下的属性 [了解更多](https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485614&amp;idx=1&amp;sn=b25bac7cfbb02bdcab76b41f10a4bffb&source=41#wechat_redirect) [使用](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules) [演示代码](./prefetching_preloading)<br><br>
 Preload优先级比PreFetch高。这两者是有区别的：<br>
 * preload：主要是用于当前页面的预加载，会和主文件bundle.js并行下载，且优先获取，可用于预加载某些必要模块<br>
 * prefetch: 主要是用于下一步操作或者页面，会在浏览器空闲时间才去下载，优先级低<br>
