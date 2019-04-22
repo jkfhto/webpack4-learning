@@ -7,7 +7,7 @@
 import _ from "lodash";
 
 var element = document.createElement('div');
-element.innerHTML = _.join(['Dell', 'Lee'], '-');
+element.innerHTML = _.join(['111', '222'], '-');
 document.body.appendChild(element);
 
 //异步代码(import)
@@ -16,7 +16,7 @@ document.body.appendChild(element);
 // 				default: _
 // 			}) => {
 // 		var element = document.createElement('div');
-// 		element.innerHTML = _.join(['Dell', 'Lee'], '-');
+// 		element.innerHTML = _.join(['111', '222'], '-');
 // 		return element;
 // 	})
 // }
