@@ -64,7 +64,15 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
 开发环境(development)和生产环境(production)的构建目标差异很大。在开发环境中，我们需要具有强大的、具有实时重新加载(live reloading)或热模块替换(hot module replacement)能力的 source map 和 localhost server。而在生产环境中，我们的目标则转向于关注更小的 bundle，更轻量的 source map，以及更优化的资源，以改善加载时间。由于要遵循逻辑分离，我们通常建议为每个环境编写彼此独立的 webpack 配置 [了解更多](https://webpack.js.org/guides/production)  [演示代码](./development_production)<br>
 
 # Code Splitting
-代码分离是 webpack 中最引人注目的特性之一。此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间 [了解更多](https://webpack.js.org/guides/code-splitting)
+代码分离是 webpack 中最引人注目的特性之一。此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间 [了解更多](https://webpack.js.org/guides/code-splitting)<br>
+有三种常用的代码分离方法：<br>
+
+* 入口起点：使用 entry 配置手动地分离代码。<br>
+这种方法存在一些问题:<br>
+* 如果入口 chunks 之间包含重复的模块，那些重复模块都会被引入到各个 bundle 中。<br>
+* 这种方法不够灵活，并且不能将核心应用程序逻辑进行动态拆分代码。<br>
+* 防止重复：使用 SplitChunksPlugin 去重和分离 chunk。[了解更多](https://webpack.js.org/plugins/split-chunks-plugin/)<br>
+* 动态导入：通过模块的内联函数调用来分离代码。<br>
 
 
 
