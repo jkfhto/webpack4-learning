@@ -72,6 +72,18 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
     * 如果入口 chunks 之间包含重复的模块，那些重复模块都会被引入到各个 bundle 中。<br>
     * 这种方法不够灵活，并且不能将核心应用程序逻辑进行动态拆分代码。<br>
 * 防止重复：使用 SplitChunksPlugin 去重和分离 chunk。 [了解更多](https://webpack.js.org/plugins/split-chunks-plugin/)<br>
+    * chunks: 表示从哪些chunks里面抽取代码，除了三个可选字符串值 initial、async、all 之外，还可以通过函数来过滤所需的 chunks。<br>
+    * minSize: 表示抽取出来的文件在压缩前的最小大小，默认为30000，需要进行代码分离的代码块要大于30000，否则不生成新chunk。<br>
+    * maxSize: 表示抽取出来的文件在压缩前的最大大小，默认为 0，表示不限制最大大小。<br>
+    * minChunks: 表示module被引用次数，默认为1，大于等于该次数才会进行代码分割<br>
+    * maxAsyncRequests：最大的按需(异步)加载次数，默认为 5，超过该值，其他的module不会进行代码分割<br>
+    * maxInitialRequests： 入口文件最大的初始化加载次数，默认为 3，超过该值，其他的module不会进行代码分割<br>
+    * automaticNameDelimiter：分割出来的文件的自动生成名字的分割符，默认为 ~<br>
+    * name：chunk的名字，如果设成true，会根据被提取的chunk自动生成。<br>
+    * cacheGroups： 缓存组才是我们配置的关键。它可以继承/覆盖上面 splitChunks 中所有的参数值，除此之外还额外提供了三个配置，分别为：test, priority 和 reuseExistingChunk。要禁用默认缓存组，请将default设置为false。<br>
+        * test：用来决定提取哪些module，默认为所有的 modules，可匹配模块路径或 chunk 名字，当匹配的是 chunk 名字的时候，其里面的所有 modules 都会选中。<br>
+        * priority：表示抽取权重，数字越大表示优先级越高。因为一个 module 可能会满足多个 cacheGroups 的条件，分割到priority高的cacheGroups<br>
+        * reuseExistingChunk: 表示是否使用已有的 chunk，如果为 true 则表示如果当前的 chunk 包含的模块已经被抽取出去了，那么将不会重新生成新的.<br>
 * 动态导入：通过模块的内联函数调用来分离代码。 [了解更多](https://webpack.js.org/guides/code-splitting/#dynamic-imports)<br> 
 
 
