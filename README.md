@@ -133,7 +133,7 @@ Preload优先级比PreFetch高。这两者是有区别的：<br>
 * Workbox：PWA的JavaScript库集合[了解更多](https://github.com/GoogleChrome/workbox/)
 
 # TypeScript
-[TypeScript](https://www.typescriptlang.org/) 是 JavaScript 的超集，为其增加了类型系统，可以编译为普通的 JavaScript 代码。 [了解更多](https://www.webpackjs.com/guides/typescript/) [演示代码](./typescript)<br>
+[TypeScript](https://www.typescriptlang.org/) 是 JavaScript 的超集，为其增加了类型系统，可以编译为普通的 JavaScript 代码。 [了解更多](https://webpack.js.org/guides/typescript/) [演示代码](./typescript)<br>
 
 
 
