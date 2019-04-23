@@ -63,7 +63,7 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
 # 区分生产环境/开发环境
 开发环境(development)和生产环境(production)的构建目标差异很大。在开发环境中，我们需要具有强大的、具有实时重新加载(live reloading)或热模块替换(hot module replacement)能力的 source map 和 localhost server。而在生产环境中，我们的目标则转向于关注更小的 bundle，更轻量的 source map，以及更优化的资源，以改善加载时间。由于要遵循逻辑分离，我们通常建议为每个环境编写彼此独立的 webpack 配置 [了解更多](https://webpack.js.org/guides/production)  [演示代码](./development_production)<br>
 
-# Code Splitting
+# Code Splitting 代码分割
 代码分离是 webpack 中最引人注目的特性之一。此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间 [了解更多](https://webpack.js.org/guides/code-splitting) [演示代码](./code_splitting)<br><br>
 有三种常用的代码分离方法：<br>
 
@@ -92,7 +92,7 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
 * OptimizeCSSAssetsPlugin：css代码压缩优化，[了解更多](https://github.com/NMFR/optimize-css-assets-webpack-plugin)<br>
 [演示代码](./code_splitting_css)<br>
 
-# Bundle Analysis
+# Bundle Analysis 打包分析
 如果我们以分离代码作为开始，那么就以检查模块作为结束，分析输出结果是很有用处的。[官方分析工具](https://github.com/webpack/analyse) 是一个好的初始选择 [了解更多](https://webpack.js.org/guides/code-splitting/#bundle-analysis)<br>
 
 # Prefetching/Preloading 
@@ -101,8 +101,13 @@ Preload优先级比PreFetch高。这两者是有区别的：<br>
 * preload：主要是用于当前页面的预加载，会和主文件bundle.js并行下载，且优先获取，可用于预加载某些必要模块<br>
 * prefetch: 主要是用于下一步操作或者页面，会在浏览器空闲时间才去下载，优先级低<br>
 
-# Lazy Loading
+# Lazy Loading 懒加载
 懒加载或者按需加载，是一种很好的优化网页或应用的方式。这种方式实际上是先把你的代码在一些逻辑断点处分离开，然后在一些代码块中完成某些操作后，立即引用或即将引用另外一些新的代码块。这样加快了应用的初始加载速度，减轻了它的总体体积，因为某些代码块可能永远不会被加载。 [了解更多](https://webpack.js.org/guides/lazy-loading) [演示代码](./lazy_loading)<br>
+
+# Caching 缓存
+我们使用 webpack 来打包我们的模块化后的应用程序，webpack 会生成一个可部署的 /dist 目录，然后把打包后的内容放置在此目录中。只要 /dist 目录中的内容部署到服务器上，客户端（通常是浏览器）就能够访问网站此服务器的网站及其资源。而最后一步获取资源是比较耗费时间的，这就是为什么浏览器使用一种名为 缓存 的技术。可以通过命中缓存，以降低网络流量，使网站加载速度更快，然而，如果我们在部署新版本时不更改资源的文件名，浏览器可能会认为它没有被更新，就会使用它的缓存版本。由于缓存的存在，当你需要获取新的代码时，就会显得很棘手。通过必要的配置，以确保 webpack 编译生成的文件能够被客户端缓存，而在文件内容变化后，能够请求到新的文件 [了解更多](https://webpack.js.org/guides/caching) [演示代码](./caching)<br>
+* contenthash：根据文件的内容添加唯一的哈希。当文件的内容发生变化时，contenthash也会发生变化<br>
+* runtimeChunk：解决老版本webpack打包时，文件内容没有变化但是contenthash变化bug <br>
 
 
 
