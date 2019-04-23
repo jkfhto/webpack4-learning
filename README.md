@@ -139,6 +139,7 @@ Preload优先级比PreFetch高。这两者是有区别的：<br>
 
 # webpack-dev-server 
 * devServer.proxy：实现请求转发，如果你有单独的后端开发服务器 API，并且希望在同域名下发送 API 请求 ，那么代理某些 URL 会很有用。dev-server 使用了非常强大的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 包。更多高级用法，请查阅其[文档](https://github.com/chimurai/http-proxy-middleware#options) [演示代码](./proxy)。<br>
+* devServer.historyApiFallback：当使用 [HTML5 History API](https://developer.mozilla.org/en-US/docs/Web/API/History) 时，任意的 404 响应都可能需要被替代为 index.html，通过设置historyApiFallback: true启用 [了解更多](https://webpack.js.org/configuration/dev-server/#devserverhistoryapifallback/)
 
 
 
