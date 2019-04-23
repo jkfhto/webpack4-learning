@@ -23,6 +23,7 @@
 * html-webpack-plugin：打包之后自动生成一个 HTML 文件， 并把打包生成的js文件自动引入到这个html文件中  [了解更多](https://webpack.js.org/loaders/file-loader)<br>
 * clean-webpack-plugin：用于打包之前，删除/清除构建文件夹  [了解更多](https://www.npmjs.com/package/clean-webpack-plugin)<br>
 * HotModuleReplacementPlugin：启用热替换模块(Hot Module Replacement)，也被称为 HMR，实时预览修改后的页面，无需重新加载整个页面  [了解更多](https://webpack.js.org/plugins/hot-module-replacement-plugin)  [API调用](https://webpack.js.org/api/hot-module-replacement)<br> 
+* ProvidePlugin：自动加载模块，而不必到处 import 或 require  [了解更多](https://webpack.js.org/plugins/provide-plugin)<br> 
 
 **Mode<br>**
 通过选择 development 或 production 之中的一个，来设置 mode 参数，你可以启用相应模式下的 webpack 内置的优化 [了解更多](https://webpack.js.org/configuration/mode/)<br>
