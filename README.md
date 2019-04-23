@@ -117,11 +117,13 @@ Preload优先级比PreFetch高。这两者是有区别的：<br>
 # Authoring Libraries 打包库
 除了打包应用程序代码，webpack 还可以用于打包 JavaScript library。该指南适用于希望流水线化(streamline)打包策略的 library 作者。 [了解更多](https://webpack.js.org/guides/author-libraries) [演示代码](./library)<br>
 
-对于库的广泛使用，我们希望它在不同的环境中兼容，即CommonJS，AMD，Node.js和全局变量。要使您的库可供使用，需要在 output 中添加 library 属性，为了让 library 和其他环境兼容，还需要在配置文件中添加 libraryTarget 属性。这是可以控制 library 如何以不同方式暴露的选项；可以通过以下方式暴露 library：<br>
-    * 变量：作为一个全局变量，通过 script 标签来访问（libraryTarget:'var'）。<br>
-    * this：通过 this 对象访问（libraryTarget:'this'）。<br>
-    * window：通过 window 对象访问，在浏览器中（libraryTarget:'window'）。<br>
-    * UMD：在 AMD 或 CommonJS 的 require 之后可访问（libraryTarget:'umd'）<br>
+对于库的广泛使用，我们希望它在不同的环境中兼容，即CommonJS，AMD，Node.js和全局变量。要使您的库可供使用，需要在 output 中添加 library 属性，为了让 library 和其他环境兼容，还需要在配置文件中添加 libraryTarget 属性。这是可以控制 library 如何以不同方式暴露的选项；<br>
+可以通过以下方式暴露 library：<br>
+* 变量：作为一个全局变量，通过 script 标签来访问（libraryTarget:'var'）。<br>
+* this：通过 this 对象访问（libraryTarget:'this'）。<br>
+* window：通过 window 对象访问，在浏览器中（libraryTarget:'window'）。<br>
+* UMD：在 AMD 或 CommonJS 的 require 之后可访问（libraryTarget:'umd'）<br><br>
+
 一般需要同时配置library，libraryTarget来兼容实现CommonJS，AMD，Node.js和全局变量<br>
 外部扩展<br>
 * externals：防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖 
