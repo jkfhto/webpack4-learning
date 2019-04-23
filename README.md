@@ -67,8 +67,8 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
 # Code Splitting 代码分割
 代码分离是 webpack 中最引人注目的特性之一。此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间 [了解更多](https://webpack.js.org/guides/code-splitting) [演示代码](./code_splitting)<br>
 webpack中实现代码分割，两种方式<br>
-    * 同步代码： 只需要在配置文件中中做optimization的配置即可<br>
-    * 异步代码(import): 异步代码，无需做任何配置，会自动进行代码分割，放置到新的文件中<br><br>
+* 同步代码： 只需要在配置文件中中做optimization的配置即可<br>
+* 异步代码(import): 异步代码，无需做任何配置，会自动进行代码分割，放置到新的文件中<br><br>
     
 有三种常用的代码分离方法：<br>
 
