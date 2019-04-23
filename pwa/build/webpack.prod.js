@@ -38,6 +38,7 @@ const prodConfig = {
 			filename: '[name].css',
 			chunkFilename: '[name].chunk.css'
 		}),
+		//配置 ServiceWorkers
 		new WorkboxPlugin.GenerateSW({
 			// 这些选项帮助 ServiceWorkers 快速启用
 			// 不允许遗留任何“旧的” ServiceWorkers
