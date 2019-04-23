@@ -137,8 +137,8 @@ Preload优先级比PreFetch高。这两者是有区别的：<br>
 # TypeScript
 [TypeScript](https://www.typescriptlang.org/) 是 JavaScript 的超集，为其增加了类型系统，可以编译为普通的 JavaScript 代码。 [了解更多](https://webpack.js.org/guides/typescript/) [演示代码](./typescript)<br>
 
-# webpack-dev-server 实现请求转发
-* devServer.proxy：如果你有单独的后端开发服务器 API，并且希望在同域名下发送 API 请求 ，那么代理某些 URL 会很有用。dev-server 使用了非常强大的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 包。更多高级用法，请查阅其[文档](https://github.com/chimurai/http-proxy-middleware#options) [演示代码](./proxy)。<br>
+# webpack-dev-server 
+* devServer.proxy：实现请求转发，如果你有单独的后端开发服务器 API，并且希望在同域名下发送 API 请求 ，那么代理某些 URL 会很有用。dev-server 使用了非常强大的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 包。更多高级用法，请查阅其[文档](https://github.com/chimurai/http-proxy-middleware#options) [演示代码](./proxy)。<br>
 
 
 
