@@ -123,7 +123,9 @@ Preload优先级比PreFetch高。这两者是有区别的：<br>
 * this：通过 this 对象访问（libraryTarget:'this'）。<br>
 * window：通过 window 对象访问，在浏览器中（libraryTarget:'window'）。<br>
 * UMD：在 AMD 或 CommonJS 的 require 之后可访问（libraryTarget:'umd'）<br>
-一般需要同时配置library，libraryTarget来兼容实现CommonJS，AMD，Node.js和全局变量
+一般需要同时配置library，libraryTarget来兼容实现CommonJS，AMD，Node.js和全局变量<br>
+外部扩展<br>
+* externals：防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖 
 
 
 
