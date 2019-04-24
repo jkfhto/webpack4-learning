@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
+const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin'); //在打包生成的html文件中引入额外的静态文件
 const webpack = require('webpack');
 
 const plugins = [
@@ -17,7 +17,7 @@ const plugins = [
 const files = fs.readdirSync(path.resolve(__dirname, '../dll'));
 files.forEach(file => {
 	if(/.*\.dll.js/.test(file)) {
-		plugins.push(new AddAssetHtmlWebpackPlugin({
+		plugins.push(new AddAssetHtmlWebpackPlugin({//将打包的
 			filepath: path.resolve(__dirname, '../dll', file)
 		}))
 	}
