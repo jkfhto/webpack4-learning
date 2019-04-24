@@ -141,6 +141,13 @@ Preload优先级比PreFetch高。这两者是有区别的：<br>
 * devServer.proxy：实现请求转发，如果你有单独的后端开发服务器 API，并且希望在同域名下发送 API 请求 ，那么代理某些 URL 会很有用。dev-server 使用了非常强大的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 包。更多高级用法，请查阅其[文档](https://github.com/chimurai/http-proxy-middleware#options) [演示代码](./proxy)。<br>
 * devServer.historyApiFallback：当使用 [HTML5 History API](https://developer.mozilla.org/en-US/docs/Web/API/History) 时，任意的 404 响应都可能需要被替代为 index.html，通过设置historyApiFallback: true启用 [了解更多](https://webpack.js.org/configuration/dev-server/#devserverhistoryapifallback)
 
+# Build Performance  构建性能 提高打包效率速度
+* 1：跟上技术的迭代（Node，Npm，Yarn）。使用最新的 webpack 版本。我们会经常进行性能优化。保持最新的 Node.js 也能够保证性能。除此之外，保证你的包管理工具 (例如 npm 或者 yarn ) 为最新也能保证性能。较新的版本能够建立更高效的模块树以及提高解析速度<br>
+* 2：将 loaders 应用于最少数的必要模块中。使用include字段仅将loader模块应用在实际需要用其转换的位置中，使用exclude字段排除特定条件。<br>
+* 3：plugin尽可能精简且确保可靠，插件选择要合理，尽量选择官方推荐的性能比较好的插件。<br>
+* 3：[resolve](https://webpack.js.org/configuration/resolve/#root)参数合理[配置](https://webpack.js.org/guides/build-performance#resolving)。<br>
+* 4：使用[ DllPlugin](https://webpack.js.org/plugins/dll-plugin/#root) 将更改不频繁的代码进行单独编译。这将改善引用程序的编译速度，即使它增加了构建过程的复杂性[演示代码](./proxy)。<br>
+[了解更多](https://webpack.js.org/guides/build-performance) <br>
 
 
 
