@@ -147,6 +147,7 @@ Preload优先级比PreFetch高。这两者是有区别的：<br>
 * 3：plugin尽可能精简且确保可靠，插件选择要合理，尽量选择官方推荐的性能比较好的插件。<br>
 * 3：[resolve](https://webpack.js.org/configuration/resolve/#root)参数合理[配置](https://webpack.js.org/guides/build-performance#resolving)。<br>
 * 4：使用[ DllPlugin](https://webpack.js.org/plugins/dll-plugin/#root) 将更改不频繁的代码进行单独编译。这将改善引用程序的编译速度，即使它增加了构建过程的复杂性[演示代码](./dll)。<br>
+
 [了解更多](https://webpack.js.org/guides/build-performance) <br>
 
 
