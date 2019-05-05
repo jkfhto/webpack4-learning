@@ -42,7 +42,7 @@ webpack-dev-server 能够用于快速开发应用程序，会将打包后的文�
 
 
 
-# 转换es6
+## 转换es6
 
 **Babel <br>**
 Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中 [了解更多](https://babeljs.io/docs/en/)<br><br>
@@ -56,17 +56,17 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
     2：可能会污染子模块的局部作用域，严重的或许会导致冲突，旨在用于应用程序，业务逻辑而不是库/工具；<br>
 * babel/plugin-transform-runtime：将开发者依赖的全局内置对象等，抽取成单独的模块，并通过模块导入的方式引入，避免了对全局作用域的修改（污染），同时能按需注入polyfill；[了解更多](https://babeljs.io/docs/en/babel-plugin-transform-runtime)<br>
 
-# 打包React代码
+## 打包React代码
 **babel/preset-react [了解更多](https://babeljs.io/docs/en/babel-preset-react)<br>**
 
 # Tree Shaking
 移除 JavaScript 上下文中的未引用代码；基于 ES6 的[静态引用]，tree shaking 通过扫描所有 ES6 的 export，找出被 import 的内容并添加到最终代码中。 webpack 的实现是把所有 import 标记为有使用/无使用两种，在后续压缩时进行区别处理。源码必须遵循 ES6 的模块规范 (import & export)，如果是 CommonJS 规范 (require) 则无法使用 [了解更多](https://webpack.js.org/guides/tree-shaking)<br>
 * sideEffects：如果我们引入的 包/模块 被标记为 sideEffects: false 了，那么不管它是否真的有副作用，只要它没有被调用，整个 模块/包 都会被完整的移除 [演示代码](./tree_shaking)<br>
 
-# 区分生产环境/开发环境
+## 区分生产环境/开发环境
 开发环境(development)和生产环境(production)的构建目标差异很大。在开发环境中，我们需要具有强大的、具有实时重新加载(live reloading)或热模块替换(hot module replacement)能力的 source map 和 localhost server。而在生产环境中，我们的目标则转向于关注更小的 bundle，更轻量的 source map，以及更优化的资源，以改善加载时间。由于要遵循逻辑分离，我们通常建议为每个环境编写彼此独立的 webpack 配置 [了解更多](https://webpack.js.org/guides/production)  [演示代码](./development_production)<br>
 
-# Code Splitting 代码分割
+## Code Splitting 代码分割
 代码分离是 webpack 中最引人注目的特性之一。此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间 [了解更多](https://webpack.js.org/guides/code-splitting) [演示代码](./code_splitting)<br>
 webpack中实现代码分割，两种方式<br>
 * 同步代码： 只需要在配置文件中中做optimization的配置即可<br>
@@ -93,30 +93,30 @@ webpack中实现代码分割，两种方式<br>
         * reuseExistingChunk: 表示是否使用已有的 chunk，如果为 true 则表示如果当前的 chunk 包含的模块已经被抽取出去了，那么将不会重新生成新的.<br>
 * 动态导入：通过模块的内联函数调用来分离代码。 [了解更多](https://webpack.js.org/guides/code-splitting/#dynamic-imports)<br> 
 
-# css文件代码分割
+## css文件代码分割
 注意：对css代码进行代码分割，需要配置sideEffects，消除tree shaking的影响  如果sideEffects：false，css代码会被过滤掉
 * MiniCssExtractPlugin：将CSS提取为独立的文件的插件，对每个包含css的js文件都会创建一个CSS文件，支持按需加载css和sourceMap [了解更多](https://webpack.js.org/plugins/mini-css-extract-plugin) <br>
 * OptimizeCSSAssetsPlugin：css代码压缩优化，[了解更多](https://github.com/NMFR/optimize-css-assets-webpack-plugin)<br>
 [演示代码](./code_splitting_css)<br>
 
-# Bundle Analysis 打包分析
+## Bundle Analysis 打包分析
 如果我们以分离代码作为开始，那么就以检查模块作为结束，分析输出结果是很有用处的。[官方分析工具](https://github.com/webpack/analyse) 是一个好的初始选择 [了解更多](https://webpack.js.org/guides/code-splitting/#bundle-analysis)<br>
 
-# Prefetching/Preloading 
+## Prefetching/Preloading 
 Preload是预加载，PreFetch是预测将要加载的模块，这两者都是link标签下的属性 [了解更多](https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485614&amp;idx=1&amp;sn=b25bac7cfbb02bdcab76b41f10a4bffb&source=41#wechat_redirect) [使用](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules) [演示代码](./prefetching_preloading)<br><br>
 Preload优先级比PreFetch高。这两者是有区别的：<br>
 * preload：主要是用于当前页面的预加载，会和主文件bundle.js并行下载，且优先获取，可用于预加载某些必要模块<br>
 * prefetch: 主要是用于下一步操作或者页面，会在浏览器空闲时间才去下载，优先级低<br>
 
-# Lazy Loading 懒加载
+## Lazy Loading 懒加载
 懒加载或者按需加载，是一种很好的优化网页或应用的方式。这种方式实际上是先把你的代码在一些逻辑断点处分离开，然后在一些代码块中完成某些操作后，立即引用或即将引用另外一些新的代码块。这样加快了应用的初始加载速度，减轻了它的总体体积，因为某些代码块可能永远不会被加载。 [了解更多](https://webpack.js.org/guides/lazy-loading) [演示代码](./lazy_loading)<br>
 
-# Caching 缓存
+## Caching 缓存
 我们使用 webpack 来打包我们的模块化后的应用程序，webpack 会生成一个可部署的 /dist 目录，然后把打包后的内容放置在此目录中。只要 /dist 目录中的内容部署到服务器上，客户端（通常是浏览器）就能够访问网站此服务器的网站及其资源。而最后一步获取资源是比较耗费时间的，这就是为什么浏览器使用一种名为 缓存 的技术。可以通过命中缓存，以降低网络流量，使网站加载速度更快，然而，如果我们在部署新版本时不更改资源的文件名，浏览器可能会认为它没有被更新，就会使用它的缓存版本。由于缓存的存在，当你需要获取新的代码时，就会显得很棘手。通过必要的配置，以确保 webpack 编译生成的文件能够被客户端缓存，而在文件内容变化后，能够请求到新的文件 [了解更多](https://webpack.js.org/guides/caching) [演示代码](./caching)<br>
 * contenthash：根据文件的内容添加唯一的哈希。当文件的内容发生变化时，contenthash也会发生变化<br>
 * runtimeChunk：解决老版本webpack打包时，文件内容没有变化但是contenthash变化bug <br>
 
-# Authoring Libraries 打包库
+## Authoring Libraries 打包库
 除了打包应用程序代码，webpack 还可以用于打包 JavaScript library。该指南适用于希望流水线化(streamline)打包策略的 library 作者。 [了解更多](https://webpack.js.org/guides/author-libraries) [演示代码](./library)<br>
 
 对于库的广泛使用，我们希望它在不同的环境中兼容，即CommonJS，AMD，Node.js和全局变量。要使您的库可供使用，需要在 output 中添加 library 属性，为了让 library 和其他环境兼容，还需要在配置文件中添加 libraryTarget 属性。这是可以控制 library 如何以不同方式暴露的选项；<br>
@@ -130,22 +130,24 @@ Preload优先级比PreFetch高。这两者是有区别的：<br>
 外部扩展<br>
 * externals：防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖 <br>
 
-# Progressive Web Application PWA 渐进式网络应用程序
+## Progressive Web Application PWA 渐进式网络应用程序
 渐进式网络应用程序[(Progressive Web Application - PWA)](https://developers.google.com/web/progressive-web-apps/)，是一种可以提供类似于原生应用程序(native app)体验的网络应用程序(web app)。PWA 可以用来做很多事。其中最重要的是，在离线(offline)时应用程序能够继续运行功能。这是通过使用名为 [Service Workers](https://developers.google.com/web/fundamentals/primers/service-workers/) 的网络技术来实现的。 [了解更多](https://webpack.js.org/guides/progressive-web-application/) [演示代码](./pwa)<br>
 * Workbox：PWA的JavaScript库集合[了解更多](https://github.com/GoogleChrome/workbox/)
 
-# TypeScript
+## TypeScript
 [TypeScript](https://www.typescriptlang.org/) 是 JavaScript 的超集，为其增加了类型系统，可以编译为普通的 JavaScript 代码。 [了解更多](https://webpack.js.org/guides/typescript/) [演示代码](./typescript)<br>
 
-# webpack-dev-server 
+## webpack-dev-server 
 * devServer.proxy：实现请求转发，如果你有单独的后端开发服务器 API，并且希望在同域名下发送 API 请求 ，那么代理某些 URL 会很有用。dev-server 使用了非常强大的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 包。更多高级用法，请查阅其[文档](https://github.com/chimurai/http-proxy-middleware#options) [演示代码](./proxy)。<br>
 * devServer.historyApiFallback：当使用 [HTML5 History API](https://developer.mozilla.org/en-US/docs/Web/API/History) 时，任意的 404 响应都可能需要被替代为 index.html，通过设置historyApiFallback: true启用 [了解更多](https://webpack.js.org/configuration/dev-server/#devserverhistoryapifallback)
 
-# Build Performance  构建性能 提高打包效率速度
+## webpack 的性能瓶颈
 webpack 的优化瓶颈，主要是两个方面：
 
 *   webpack 的构建过程太花时间
 *   webpack 打包的结果体积太大
+
+## Build Performance  构建性能 提高打包效率速度
 * 1：跟上技术的迭代（Node，Npm，Yarn）。使用最新的 webpack 版本。我们会经常进行性能优化。保持最新的 Node.js 也能够保证性能。除此之外，保证你的包管理工具 (例如 npm 或者 yarn ) 为最新也能保证性能。较新的版本能够建立更高效的模块树以及提高解析速度<br>
 * 2：将 loaders 应用于最少数的必要模块中。使用include字段仅将loader模块应用在实际需要用其转换的位置中，使用exclude字段排除特定条件。<br>
 * 3：plugin尽可能精简且确保可靠，插件选择要合理，尽量选择官方推荐的性能比较好的插件。<br>
