@@ -14,6 +14,7 @@ const plugins = [
 	})
 ];
 
+// dll相关配置
 const files = fs.readdirSync(path.resolve(__dirname, '../dll'));
 files.forEach(file => {
 	if(/.*\.dll.js/.test(file)) {
