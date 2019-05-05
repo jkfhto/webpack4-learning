@@ -1,7 +1,7 @@
 # webpack4-learning
 
 **Webpack<br>**
-模块化打包工具，默认只能处理JavaScript模块文件<br>
+模块化打包工具，默认只能处理JavaScript模块文件，它会根据代码的内容解析模块依赖，会把我们项目中使用到的多个代码模块（可以是不同文件类型），打包构建成项目运行仅需要的几个静态文件<br>
 
 **Entry<br>**
 指示 webpack 应该使用哪个模块，来作为构建其内部依赖图的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的。每个依赖项随即被处理，最后输出到称之为 bundles 的文件中 [了解更多](https://webpack.js.org/concepts/entry-points)<br>
