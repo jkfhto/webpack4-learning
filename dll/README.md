@@ -6,5 +6,5 @@ DllPlugin 是基于 Windows 动态链接库（dll）的思想被创作出来的�
 
 用 DllPlugin 处理文件，要分两步走：
 
-*   基于 dll 专属的配置文件，打包 dll 库
+*   [基于 dll 专属的配置文件，打包 dll 库](./build/webpack.dll.js)
 *   基于 webpack.config.js 文件，打包业务代码
