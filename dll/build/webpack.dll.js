@@ -11,6 +11,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
+//基于 dll 专属的配置文件，打包 dll 库
 module.exports = {
 	mode: 'production',
 	entry: { //需要打包的第三方模块
