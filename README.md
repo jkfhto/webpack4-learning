@@ -156,6 +156,11 @@ webpack 的优化瓶颈，主要是两个方面：
 
 [了解更多](https://webpack.js.org/guides/build-performance) <br>
 
+## 参考
+
+- [从基础到实战	手把手带你掌握新版Webpack4.0](https://coding.imooc.com/class/316.html)
+- [四大维度解锁Webpack3.0前端工程化](https://coding.imooc.com/class/171.html)
+
 
 
 
