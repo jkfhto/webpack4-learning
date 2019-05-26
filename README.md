@@ -1,16 +1,170 @@
 # webpack4-learning
 
-**Webpack<br>**
-模块化打包工具，默认只能处理JavaScript模块文件，它会根据代码的内容解析模块依赖，会把我们项目中使用到的多个代码模块（可以是不同文件类型），打包构建成项目运行仅需要的几个静态文件<br>
+## 模块化
 
-**Entry<br>**
-指示 webpack 应该使用哪个模块，来作为构建其内部依赖图的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的。每个依赖项随即被处理，最后输出到称之为 bundles 的文件中 [了解更多](https://webpack.js.org/concepts/entry-points)<br>
+模块化是指解决一个复杂问题时自顶向下逐层把系统划分成若干模块的过程，有多种属性，分别反映其内部特性。（百度百科）
 
-**Output<br>**
-告诉 webpack 在哪里输出它所创建的 bundles，以及如何命名这些文件 [了解更多](https://webpack.js.org/concepts/output)<br>
+模块化的设计可以为系统带来很多好处：
 
-**Loaders<br>**
+* 作用域封装：在 JavaScript 中代码执行的顶层作用域即是全局作用域，这意味着变量和函数定义很容易冲突。而使用模块将代码封装起来，可保证内部实现不会暴露在全局作用域中，我们只需将模块的功能通过接口的方式暴露出去给其它模块调用即可，避免了污染全局命名空间的问题。
+* 重用性：在工程中经常会出现重复的部分，比如一个 Web 应用中各个页面共同的 header、footer，最原始的开发方式是将同样的代码复制粘贴到各个地方。这种做法的缺点是当这些共同的部分发生改变时，我们需要逐一改动每个地方的代码。而如果把实现一类功能的代码封装为模块之后，就可以提供给各个调用者。进行变更时只需要修改当前模块。
+* 3.解除耦合：试想一下如果有一个几千行代码的文件在你的工程里，内部实现了各种各样的功能并且互相调用，这样的代码调试起来有多痛苦。将系统分解为模块的一个很重要意义就是解除各部分之间的耦合。当系统的某个部分需要发生改变的时候，通过模块我们可以快速定位问题。由于模块把功能的具体实现封装在了内部，只要模块间的接口不变，模块内部的变化对于外面的其它部分并没有感知。因此通过模块化可以提升系统的可维护性。
+* 4.按需加载：如果没有模块，所有的代码将被放在一个大文件里面统统塞给用户。当页面不断地增加功能，不断地添加代码，最终的文件只会越来越大，而页面也打开地越来越慢，对于用户来说非常不友好。使用模块化来拆分逻辑可以使页面需要的资源最先被加载，而后续的模块在恰当的时机再进行异步加载，从而让页面加载速度更快，用户也得到更好的体验。
+
+## Webpack
+
+模块化打包工具，默认只能处理JavaScript模块文件，在 Webpack 处理应用程序时，它会在内部创建一个依赖图（dependency graph），用于映射到项目需要的每个模块，会把我们项目中使用到的多个代码模块（可以是不同文件类型），打包构建成项目运行仅需要的几个静态文件。<br>
+
+webpack-解决什么问题？
+像Grunt、Gulp这类构建工具，打包的思路是：```遍历源文件```→```匹配规则```→```打包```，这个过程中做不到按需加载，即对于打包起来的资源，到底页面用不用，打包过程中是不关心的。
+
+webpack跟其他构建工具本质上不同之处在于：```webpack是从入口文件开始，经过模块依赖加载、分析和打包三个流程完成项目的构建。```在加载、分析和打包的三个过程中，可以针对性的做一些解决方案，比如```code split```（拆分公共代码等）。
+
+当然，Webpack还可以轻松的解决传统构建工具解决的问题：
+
+* 模块化打包，一切皆模块，JS是模块，CSS等也是模块；
+* 语法糖转换：比如ES6转ES5、TypeScript；
+* 预处理器编译：比如Less、Sass等；
+* 项目优化：比如压缩、CDN；
+* 解决方案封装：通过强大的Loader和插件机制，可以完成解决方案的封装，比如PWA；
+* 流程对接：比如测试流程、语法检测等。
+
+## Webpack 常见名词解释
+
+* entry：项目入口
+* module：开发中每一个文件都可以看做 module，模块不局限于 js，也包含 css、图片等
+* chunk：代码块，一个 chunk 可以由多个模块组成
+* loader：模块转化器，模块的处理器，对模块进行转换处理
+* plugin：扩展插件，插件可以处理 chunk，也可以对最后的打包结果进行处理，可以完成 loader 完不成的任务
+* bundle：最终打包完成的文件，一般就是和 chunk 一一对应的关系，bundle 就是对 chunk 进行压缩打包等处理后的产出
+
+## Webpack 目前支持的占位符
+
+* [hash]：模块标识符的 hash
+* [chunkhash]：chunk 内容的 hash
+* [name]：模块名称
+* [id]：模块标识符
+* [query]：模块的 query，例如，文件名 ? 后面的字符串
+* [function]：一个 return 出一个 string 作为 filename 的函数
+
+  ```[hash]```：是```整个项目```的 hash 值，其根据每次编译内容计算得到，每次编译之后都会生成新的 hash，即修改任何文件都会导致所有文件的 hash 发生改变；在一个项目中虽然入口不同，但是 hash 是相同的；hash 无法实现前端静态资源在浏览器上长缓存，这时候应该使用 chunkhash；
+
+  ```[chunkhash]```：根据不同的入口文件（entry）进行依赖文件解析，构建对应的 chunk，生成相应的 hash；只要组成 entry 的模块文件没有变化，则对应的 hash 也是不变的，所以一般项目优化时，会将公共库代码拆分到一起，因为公共库代码变动较少的，使用 chunkhash 可以发挥最长缓存的作用；
+
+  ```[contenthash]```：使用 chunkhash 存在一个问题，当在一个 JS 文件中引入了 CSS 文件，编译后它们的 hash 是相同的。而且，只要 JS 文件内容发生改变，与其关联的 CSS 文件 hash 也会改变，针对这种情况，可以使用mini-css-extract-plugin或extract-text-webpack-plugin把CSS从JS中抽离出来并使用contenthash
+
+## webpack-配置支持多种语言
+
+Webpack不仅仅支持js配置，还支持ts（TypeScript）、CoffeeScript甚至JSX语法的配置，不同语言其实核心配置项都不变，只不过语法不同而已。[了解更多](https://webpack.js.org/configuration/configuration-languages)<br>
+
+
+除了配置文件的语法多样之外，对于配置的类型也是多样的，最常见的是直接作为一个对象来使用，除了使用对象，Webpack 还支持函数、Promise 和多配置数组。[了解更多](https://webpack.js.org/configuration/configuration-types)<br>
+
+* 函数类型的webpack配置：如果我们只使用一个配置文件来区分生产环境（production）和开发环境（development），则可以使用函数类型的 Webpack 配置，函数类型的配置必须返回一个配置对象。Webpack配置函数接受两个参数env和argv：分别对应着环境对象和Webpack-CLI的命令行选项。
+* Promise类型的Webpack配置：如果需要异步加载一些Webpack配置需要做的变量，那么可以使用Promise的方式来做Webpack的配置。
+* 多配置数组：在一些特定的场景，我们可能需要一次打包多次，而多次打包中有一些通用的配置，这时候可以使用配置数组的方式，将两次以上的Webpack配置以数组的形式导出
+
+## Entry
+
+支持多种类型，包括字符串、对象、数组。从作用上来说，包括了```单文件入口```和```多文件入口```两种方式。指示 webpack 应该使用哪个模块，来作为构建其内部依赖图的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的。每个依赖项随即被处理，最后输出到称之为 bundles 的文件中 [了解更多](https://webpack.js.org/concepts/entry-points)<br>
+
+单文件入口：可以快速创建一个只有单一文件入口的情况，例如```library```的封装，但是单文件入口的方式相对来说比较简单，在扩展配置的时候灵活性较低。
+
+多文件入口：是使用对象语法来通过支持多个```entry```，多文件入口的对象语法相对于单文件入口，具有较高的灵活性，例如多页应用、页面模块分离优化。
+
+Tips：对于一个HTML页面，我们推荐只有一个```entry```，通过统一的入口，解析出来的依赖关系更方便管理和维护。
+
+## Output
+
+指定了entry对应文件编译打包后在哪里输出它所创建的 bundles，以及如何命名这些文件等 [了解更多](https://webpack.js.org/concepts/output)
+
+output的常用属性是：
+
+* path：此选项制定了输出的bundle存放的路径，比如dist、output等
+* filename：这个是bundle的名称
+* publicPath：指定了一个在浏览器中被引用的URL地址。这种做法在需要将静态文件放在不同的域名或者 CDN 上面的时候是很有用的。
+* library：如果我们打包的目的是生成一个供别人使用的库，那么可以使用```output.library```来指定库的名称，库的名称支持占位符和普通字符串：
+* libraryTarget：确定了库的名称之后，还可以使用```output.libraryTarget```指定库打包出来的规范，output.libraryTarget取值范围为：var、assign、this、window、global、commonjs、commonjs2、commonjs-module、amd、umd、umd2、jsonp，默认是var。
+
+output输出相关的三个配置项：externals，target和devtool。
+
+## target
+
+在项目开发中，我们不仅仅是开发 web 应用，还可能开发的是 Node.js 服务应用、或者 electron 这类跨平台桌面应用，这时候因为对应的宿主环境不同，所以在构建的时候需要特殊处理。webpack 中可以通过设置```target```指定构建的目标（target）。[了解更多](https://webpack.js.org/configuration/target/)
+
+```target```的值有两种类型：```string``` 和 ```function```。
+
+string类型支持下面的七种：
+
+* web：默认，编译为类浏览器环境里可用；
+* node：编译为类Node.js环境可用（使用Node.jsrequire加载chunk）；
+* async-node：编译为类Node.js环境可用（使用fs和vm异步加载分块）；
+* electron-main：编译为Electron主进程；
+* electron-renderer：编译为Electron渲染进程；
+* node-webkit：编译为Webkit可用，并且使用jsonp去加载分块。支持Node.js内置模块和nw.gui导入（实验性质）；
+* webworker：编译成一个WebWorker。
+
+除了string类型，target还支持function类型，这个函数接收一个```compiler```作为参数
+
+## resolve
+
+Webpack进行构建的时候会从入口文件开始（entry）遍历寻找各个模块的依赖，resolve配置是帮助Webpack查找依赖模块的，通过resolve的配置，可以帮助Webpack快速查找依赖，也可以替换对应的依赖（比如开发环境用dev版本的lib等）[了解更多](https://webpack.js.org/configuration/resolve/)
+
+* ```resolve.extensions```：是帮助 Webpack 解析扩展名的配置，可以省略解析扩展名的配置，默认值：```['.wasm', '.mjs', '.js', '.json']```，所以我们引入 js 和 json 文件，可以不写它们的扩展名，通常我们可以加上```.css```、```.less```等，但是要确保同一个目录下面没有重名的css或者js文件，如果存在的话，还是写全路径吧。但是配置太多反而会导致webpack解析效率下降；
+* ```resolve.alias```：是最常用的配置，通过设置alias可以帮助webpack更快查找模块依赖，精简代码书写时相对路径的书写，能使我们编写代码更加方便。
+* ```resolve.mainfields```：有一些我们用到的模块会针对不同宿主环境提供几份代码，例如提供 ES5 和 ES6 的两份代码，或者提供浏览器环境和 nodejs 环境两份代码，这时候在package.json文件里会做如下配置：
+![package.json](./resources/1.png)
+在Webpack中，会根据resolve.mainFields的设置去决定使用哪个版本的模块代码，在不同的target下对应的resolve.mainFields默认值不同，默认target=web对应的默认值为：所以在target=web打包时，会寻找browser版本的模块代码
+![package.json](./resources/2.png)
+* ```resolve.mainFiles```：解析目录时候的默认文件名，默认是```index```，即查找目录下面的```index```+```Bresolve.extensions```文件。
+* ```resolve.modules```：查找模块依赖时，默认是node_modules
+* ```resolve.symlinks```：是否解析符合链接（软连接，symlink）
+* ```resolve.plugins```：添加解析插件，数组格式
+* ```resolve.cachePredicate```：是否缓存，支持boolean和function，function传入一个带有path和require的对象，必须返回boolean值
+
+
+## module
+在webpack解析模块的同时，不同的模块需要使用不同类型的模块处理器```（Loaders）```来处理，这部分的设置就在module配置中。module有两个配置：```module.noParse```和```module.rules```[了解更多](https://webpack.js.org/configuration/resolve/)
+
+* ```module.noParse```：可以让Webpack忽略对部分没采用模块化的文件的递归解析和处理，这样做的好处是能提高构建性能，接收的类型为正则表达式，或者正则表达式数组或者接收模块路径参数的一个函数
+  * Tips：这里一定要确定被排除出去的模块代码中不能包含```import、require、define```等内容，以保证webpack的打包包含了所有的模块，不然会导致打包出来的js因为缺少模块而报错。
+* ```module.rules```：是在处理模块时，将符合规则条件的模块，提交给对应的处理器来处理，通常用来配置loader，其类型是一个数组，数组里每一项都描述了如何去处理部分文件。每一项rule大致可以由以下三部分组成：
+  * 条件匹配：通过```test、include、exclude```等配置来命中可以应用规则的模块文件；
+    * 条件匹配相关的配置有```test、include、exclude、resource、resourceQuery和issuer```。条件匹配的对象包括三类：resource，resourceQuery和issuer。
+      * resource：请求文件的绝对路径。它已经根据resolve规则解析；
+      * issuer：被请求资源（requested+the+resource）的模块文件的绝对路径，即导入时的位置。
+    * 举例来说明：从app.js导入'./style.css?inline'：
+      * resource是/path/to/style.css；
+      * resourceQuery是?之后的inline；
+      * issuer是/path/to/app.js；
+  * 应用规则：对匹配条件通过后的模块，使用```us```e配置项来应用```loader```，可以应用一个loader或者按照从后往前的顺序应用一组loader，当然我们还可以分别给对应loader传入不同参数；
+  * 重置顺序：一组loader的执行顺序默认是**从后到前（或者从右到左）**执行，通过```enforce```选项可以让其中一个loader的执行顺序放到最前（pre）或者是最后（post）
+
+  rule 对应的配置与匹配的对象关系表：
+  | rule 配置项     | 匹配的对象                 | 
+  | -------------- | -------------------------- | 
+  | test          | resource类型                |
+  | include       | resource类型                |
+  | exclude       | resource类型                |
+  | resource      | resource类型                |
+  | resourceQuery | resourceQuery类型           |
+  | issuer        | issuer类型                  |
+
+## Loaders
 让 webpack 能够去处理那些非 JavaScript 文件（webpack 自身只理解 JavaScript）。我们可以把 loader 理解为是一个转换器，loader 可以将所有类型的文件转换为 webpack 能够处理的有效模块，然后你就可以利用 webpack 的打包能力，对它们进行处理 [了解更多](https://webpack.js.org/concepts/loaders/)<br>
+
+loader有两种配置方式：
+
+* 使用webpack.config.js的配置方式;
+* 在JavaScript文件内使用内联配置方式：
+
+给loader传参的方式有两种：
+
+* 通过options传入
+* 通过query的方式传入：loader:'html-loader?minimize=true&removeComments=false&collapseWhitespace=false'
+
+常用的loader：
+
 * file-loader：打包图片资源，字体等文件.  [了解更多](https://webpack.js.org/loaders/file-loader)<br>
 * url-loader：功能类似于 file-loader，但是在文件大小（单位 byte）低于指定的限制时，可以返回一个 DataURL，图片资源较小时适合使用url-loader，可以减少http请求，图片过大会导致打包生成的js文件过大，导致页面加载慢  [了解更多](https://webpack.js.org/loaders/url-loader)<br>
 * css-loader：处理文件中@import 的特点,处理css文件  [了解更多](https://webpack.js.org/loaders/css-loader)<br>
@@ -18,21 +172,23 @@
 * less-loader：将less文件编译为css文件  [了解更多](https://www.webpackjs.com/loaders/less-loader)<br>
 * postcss-loader：自动添加浏览器前缀  [了解更多](https://webpack.js.org/loaders/postcss-loader)<br>
 
-**Plugins<br>**
-插件目的在于解决 loader 无法实现的其他事，让打包的过程更加便捷，可以在webpack运行到某个时刻的时候，帮你做一些事情。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量 [了解更多](https://webpack.js.org/concepts/plugins)<br>
+## Plugins
+插件目的在于解决 loader 无法实现的其他事，让打包的过程更加便捷，可以在webpack运行到某个时刻的时候，帮你做一些事情。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量。Webpack本身就是有很多插件组成的，所以内置了很多插件，我们可以直接通过webpack对象的属性来直接使用，例如：webpack.optimize.UglifyJsPlugin。 [了解更多](https://webpack.js.org/concepts/plugins)<br>
 * html-webpack-plugin：打包之后自动生成一个 HTML 文件， 并把打包生成的js文件自动引入到这个html文件中  [了解更多](https://webpack.js.org/loaders/file-loader)<br>
 * clean-webpack-plugin：用于打包之前，删除/清除构建文件夹  [了解更多](https://www.npmjs.com/package/clean-webpack-plugin)<br>
 * HotModuleReplacementPlugin：启用热替换模块(Hot Module Replacement)，也被称为 HMR，实时预览修改后的页面，无需重新加载整个页面  [了解更多](https://webpack.js.org/plugins/hot-module-replacement-plugin)  [API调用](https://webpack.js.org/api/hot-module-replacement)<br> 
 * ProvidePlugin：自动加载模块，而不必到处 import 或 require  [了解更多](https://webpack.js.org/plugins/provide-plugin)<br> 
 
-**Mode<br>**
+Tips：```loader```面向的是解决某个或者某类模块的问题，而```plugin```面向的是项目整体，解决的是```loader```解决不了的问题。
+
+## Mode
 通过选择 development 或 production 之中的一个，来设置 mode 参数，你可以启用相应模式下的 webpack 内置的优化 [了解更多](https://webpack.js.org/configuration/mode/)<br>
 
-**devtool<br>**
+## devtool
 此选项控制是否生成，以及如何生成 source-map [了解更多](https://webpack.js.org/configuration/devtool)<br>
-* source-map：定义源码以及打包后的代码的映射关系 [介绍](https://blog.teamtreehouse.com/introduction-source-maps)<br>
+* source-map：定义源码以及打包后的代码的映射关系，通过 sourcemap 我们可以快速还原代码的错误位置。 [介绍](https://blog.teamtreehouse.com/introduction-source-maps)<br>
 
-**devServer<br>**
+## devServer
 webpack-dev-server 能够用于快速开发应用程序，会将打包后的文件保存在内存中，不会放在指定文件夹，从而提升打包速度 [了解更多](https://webpack.js.org/configuration/dev-server/)<br>
 每次要编译代码时，手动运行 npm run build 就会变得很麻烦。webpack 中有几个不同的选项，可以帮助你在代码发生变化后自动编译代码：<br>
 
@@ -57,13 +213,17 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
 * babel/plugin-transform-runtime：将开发者依赖的全局内置对象等，抽取成单独的模块，并通过模块导入的方式引入，避免了对全局作用域的修改（污染），同时能按需注入polyfill；[了解更多](https://babeljs.io/docs/en/babel-plugin-transform-runtime)<br>
 
 ## 打包React代码
+
 **babel/preset-react [了解更多](https://babeljs.io/docs/en/babel-preset-react)<br>**
 
-# Tree Shaking
+## Tree Shaking
+
 移除 JavaScript 上下文中的未引用代码；基于 ES6 的[静态引用]，tree shaking 通过扫描所有 ES6 的 export，找出被 import 的内容并添加到最终代码中。 webpack 的实现是把所有 import 标记为有使用/无使用两种，在后续压缩时进行区别处理。源码必须遵循 ES6 的模块规范 (import & export)，如果是 CommonJS 规范 (require) 则无法使用 [了解更多](https://webpack.js.org/guides/tree-shaking)<br>
+
 * sideEffects：如果我们引入的 包/模块 被标记为 sideEffects: false 了，那么不管它是否真的有副作用，只要它没有被调用，整个 模块/包 都会被完整的移除 [演示代码](./tree_shaking)<br>
 
 ## 区分生产环境/开发环境
+
 开发环境(development)和生产环境(production)的构建目标差异很大。在开发环境中，我们需要具有强大的、具有实时重新加载(live reloading)或热模块替换(hot module replacement)能力的 source map 和 localhost server。而在生产环境中，我们的目标则转向于关注更小的 bundle，更轻量的 source map，以及更优化的资源，以改善加载时间。由于要遵循逻辑分离，我们通常建议为每个环境编写彼此独立的 webpack 配置 [了解更多](https://webpack.js.org/guides/production)  [演示代码](./development_production)<br>
 
 ## Code Splitting 代码分割
@@ -117,18 +277,23 @@ Preload优先级比PreFetch高。这两者是有区别的：<br>
 * runtimeChunk：解决老版本webpack打包时，文件内容没有变化但是contenthash变化bug <br>
 
 ## Authoring Libraries 打包库
-除了打包应用程序代码，webpack 还可以用于打包 JavaScript library。该指南适用于希望流水线化(streamline)打包策略的 library 作者。 [了解更多](https://webpack.js.org/guides/author-libraries) [演示代码](./library)<br>
+除了打包应用程序代码，webpack 还可以用于打包 JavaScript library。 [了解更多](https://webpack.js.org/guides/author-libraries) [演示代码](./library)<br>
 
-对于库的广泛使用，我们希望它在不同的环境中兼容，即CommonJS，AMD，Node.js和全局变量。要使您的库可供使用，需要在 output 中添加 library 属性，为了让 library 和其他环境兼容，还需要在配置文件中添加 libraryTarget 属性。这是可以控制 library 如何以不同方式暴露的选项；<br>
-可以通过以下方式暴露 library：<br>
-* 变量：作为一个全局变量，通过 script 标签来访问（libraryTarget:'var'）。<br>
-* this：通过 this 对象访问（libraryTarget:'this'）。<br>
-* window：通过 window 对象访问，在浏览器中（libraryTarget:'window'）。<br>
-* UMD：在 AMD 或 CommonJS 的 require 之后可访问（libraryTarget:'umd'）<br><br>
+对于库的广泛使用，我们希望它在不同的环境中兼容，即CommonJS，AMD，Node.js和全局变量。要使您的库可供使用，需要在 output 中添加 library 属性，为了让 library 和其他环境兼容，还需要在配置文件中添加 libraryTarget 属性。这是可以控制 library 如何以不同方式暴露的选项；
 
-一般需要同时配置library，libraryTarget来兼容实现CommonJS，AMD，Node.js和全局变量<br>
-外部扩展<br>
-* externals：防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖 <br>
+一般需要同时配置library，libraryTarget来兼容实现CommonJS，AMD，Node.js和全局变量
+
+externals：配置项用于去除输出的打包文件中依赖的某些第三方 js 模块（例如```jquery```，```vue```等等），减小打包文件的体积。该功能通常在开发自定义 js 库（library）的时候用到，用于去除自定义 js 库依赖的其他第三方 js 模块。这些被依赖的模块应该由使用者提供，而不应该包含在 js 库文件中。例如开发一个 jQuery 插件或者 Vue 扩展，不需要把 jQuery 和 Vue 打包进我们的 bundle，引入库的方式应该交给使用者。[了解更多](https://webpack.js.org/configuration/externals/#externals)
+
+所以，这里就有个重要的问题，使用者应该怎么提供这些被依赖的模块给我们的 js 库（library）使用呢？这就要看我们的 js 库的导出方式是什么，以及使用者采用什么样的方式使用我们的库。例如：
+| js library导出方式  | output.libraryTarget                 | 使用者引入方式                 | 使用者引入方式  |
+| -------------- | ---------------------------- | ----------------------------- | ------------------------------- |
+| 默认的导出方式   | output.libraryTarget=‘var’  | 只能以```<script>```标签的形式引入我们的库  | 只能以```全局变量```的形式提供这些被依赖的模块        |
+| commonjs       | commonjs                     | 只能按照```commonjs```的规范引入我们的库  | 被依赖模块需要按照 commonjs 规范引入               |
+| amd            | output.libraryTarget=‘amd’   | 只能按照 amd 规范引入          | 被依赖模块需要按照 amd 规范引入    |
+| umd            | output.libraryTarget=‘umd’   | 可以用```<script>```、commonjs、amd引入  | 被依赖模块需要按照对应方式引入  |
+
+如果不是在开发一个js库，即没有设置```output.library```，```output.libraryTarget```等配置信息，那么我们生成的打包文件只能以```<script>```标签的方式在页面中引入，因此那些被去除的依赖模块也只能以全局变量的方式引入。
 
 ## Progressive Web Application PWA 渐进式网络应用程序
 渐进式网络应用程序[(Progressive Web Application - PWA)](https://developers.google.com/web/progressive-web-apps/)，是一种可以提供类似于原生应用程序(native app)体验的网络应用程序(web app)。PWA 可以用来做很多事。其中最重要的是，在离线(offline)时应用程序能够继续运行功能。这是通过使用名为 [Service Workers](https://developers.google.com/web/fundamentals/primers/service-workers/) 的网络技术来实现的。 [了解更多](https://webpack.js.org/guides/progressive-web-application/) [演示代码](./pwa)<br>
