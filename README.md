@@ -134,14 +134,14 @@ Webpack进行构建的时候会从入口文件开始（entry）遍历寻找各�
       * ```resource```：请求文件的绝对路径。它已经根据resolve规则解析；
       * ```issuer```：被请求资源（requested+the+resource）的模块文件的绝对路径，即导入时的位置。
     * 举例来说明：从app.js导入'./style.css?inline'：
-      * resource是/path/to/style.css；
-      * resourceQuery是?之后的inline；
-      * issuer是/path/to/app.js；
+      * resource是"/path/to/style.css"；
+      * resourceQuery是"?之后的inline"；
+      * issuer是"/path/to/app.js"；
   * 应用规则：对匹配条件通过后的模块，使用```us```e配置项来应用```loader```，可以应用一个loader或者按照从后往前的顺序应用一组loader，当然我们还可以分别给对应loader传入不同参数；
   * 重置顺序：一组loader的执行顺序默认是**从后到前（或者从右到左）**执行，通过```enforce```选项可以让其中一个loader的执行顺序放到最前（pre）或者是最后（post）
 
   rule 对应的配置与匹配的对象关系表：
-  
+
   | rule 配置项     | 匹配的对象                 | 
   | -------------- | -------------------------- | 
   | test          | resource类型                |
@@ -156,8 +156,8 @@ Webpack进行构建的时候会从入口文件开始（entry）遍历寻找各�
 
 loader有两种配置方式：
 
-* 使用webpack.config.js的配置方式;
-* 在JavaScript文件内使用内联配置方式：
+* ```使用webpack.config.js的配置方式```;
+* ```在JavaScript文件内使用内联配置方式```：
 
 给loader传参的方式有两种：
 
@@ -225,7 +225,7 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
 
 ## 区分生产环境/开发环境
 
-开发环境(development)和生产环境(production)的构建目标差异很大。在开发环境中，我们需要具有强大的、具有实时重新加载(live reloading)或热模块替换(hot module replacement)能力的 source map 和 localhost server。而在生产环境中，我们的目标则转向于关注更小的 bundle，更轻量的 source map，以及更优化的资源，以改善加载时间。由于要遵循逻辑分离，我们通常建议为每个环境编写彼此独立的 webpack 配置 [了解更多](https://webpack.js.org/guides/production)  [演示代码](./development_production)<br>
+开发环境(development)和生产环境(production)的构建目标差异很大。在开发环境中，我们需要具有强大的、具有实时重新加载(live reloading)或热模块替换(hot module replacement)能力的 source map 和 localhost server。而在生产环境中，我们的目标则转向于关注更小的 bundle，更轻量的 source map，以及更优化的资源，以改善加载时间。由于要遵循逻辑分离，我们通常建议为开发与生产环境编写彼此独立的 webpack 配置。同时抽离公共的配置。并且使用 ```webpack-merge ```合成生成最终开发与生产环境配置文件。 [了解更多](https://webpack.js.org/guides/production)  [演示代码](./development_production)<br>
 
 ## Code Splitting 代码分割
 代码分离是 webpack 中最引人注目的特性之一。此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间 [了解更多](https://webpack.js.org/guides/code-splitting) [演示代码](./code_splitting)<br>
@@ -287,6 +287,7 @@ Preload优先级比PreFetch高。这两者是有区别的：<br>
 externals：配置项用于去除输出的打包文件中依赖的某些第三方 js 模块（例如```jquery```，```vue```等等），减小打包文件的体积。该功能通常在开发自定义 js 库（library）的时候用到，用于去除自定义 js 库依赖的其他第三方 js 模块。这些被依赖的模块应该由使用者提供，而不应该包含在 js 库文件中。例如开发一个 jQuery 插件或者 Vue 扩展，不需要把 jQuery 和 Vue 打包进我们的 bundle，引入库的方式应该交给使用者。[了解更多](https://webpack.js.org/configuration/externals/#externals)
 
 所以，这里就有个重要的问题，使用者应该怎么提供这些被依赖的模块给我们的 js 库（library）使用呢？这就要看我们的 js 库的导出方式是什么，以及使用者采用什么样的方式使用我们的库。例如：
+
 | js library导出方式  | output.libraryTarget                 | 使用者引入方式                 | 使用者引入方式  |
 | -------------- | ---------------------------- | ----------------------------- | ------------------------------- |
 | 默认的导出方式   | output.libraryTarget=‘var’  | 只能以```<script>```标签的形式引入我们的库  | 只能以```全局变量```的形式提供这些被依赖的模块        |
