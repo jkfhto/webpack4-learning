@@ -6,10 +6,10 @@
 
 模块化的设计可以为系统带来很多好处：
 
-* 作用域封装：在 JavaScript 中代码执行的顶层作用域即是全局作用域，这意味着变量和函数定义很容易冲突。而使用模块将代码封装起来，可保证内部实现不会暴露在全局作用域中，我们只需将模块的功能通过接口的方式暴露出去给其它模块调用即可，避免了污染全局命名空间的问题。
-* 重用性：在工程中经常会出现重复的部分，比如一个 Web 应用中各个页面共同的 header、footer，最原始的开发方式是将同样的代码复制粘贴到各个地方。这种做法的缺点是当这些共同的部分发生改变时，我们需要逐一改动每个地方的代码。而如果把实现一类功能的代码封装为模块之后，就可以提供给各个调用者。进行变更时只需要修改当前模块。
-* 3.解除耦合：试想一下如果有一个几千行代码的文件在你的工程里，内部实现了各种各样的功能并且互相调用，这样的代码调试起来有多痛苦。将系统分解为模块的一个很重要意义就是解除各部分之间的耦合。当系统的某个部分需要发生改变的时候，通过模块我们可以快速定位问题。由于模块把功能的具体实现封装在了内部，只要模块间的接口不变，模块内部的变化对于外面的其它部分并没有感知。因此通过模块化可以提升系统的可维护性。
-* 4.按需加载：如果没有模块，所有的代码将被放在一个大文件里面统统塞给用户。当页面不断地增加功能，不断地添加代码，最终的文件只会越来越大，而页面也打开地越来越慢，对于用户来说非常不友好。使用模块化来拆分逻辑可以使页面需要的资源最先被加载，而后续的模块在恰当的时机再进行异步加载，从而让页面加载速度更快，用户也得到更好的体验。
+* ```作用域封装```：在 JavaScript 中代码执行的顶层作用域即是全局作用域，这意味着变量和函数定义很容易冲突。而使用模块将代码封装起来，可保证内部实现不会暴露在全局作用域中，我们只需将模块的功能通过接口的方式暴露出去给其它模块调用即可，避免了污染全局命名空间的问题。
+* ```复用性```：在工程中经常会出现重复的部分，比如一个 Web 应用中各个页面共同的 header、footer，最原始的开发方式是将同样的代码复制粘贴到各个地方。这种做法的缺点是当这些共同的部分发生改变时，我们需要逐一改动每个地方的代码。而如果把实现一类功能的代码封装为模块之后，就可以提供给各个调用者。进行变更时只需要修改当前模块。
+* ```解除耦合```：试想一下如果有一个几千行代码的文件在你的工程里，内部实现了各种各样的功能并且互相调用，这样的代码调试起来有多痛苦。将系统分解为模块的一个很重要意义就是解除各部分之间的耦合。当系统的某个部分需要发生改变的时候，通过模块我们可以快速定位问题。由于模块把功能的具体实现封装在了内部，只要模块间的接口不变，模块内部的变化对于外面的其它部分并没有感知。因此通过模块化可以提升系统的可维护性。
+* ```按需加载```：如果没有模块，所有的代码将被放在一个大文件里面统统塞给用户。当页面不断地增加功能，不断地添加代码，最终的文件只会越来越大，而页面也打开地越来越慢，对于用户来说非常不友好。使用模块化来拆分逻辑可以使页面需要的资源最先被加载，而后续的模块在恰当的时机再进行异步加载，从而让页面加载速度更快，用户也得到更好的体验。
 
 ## Webpack
 
@@ -22,30 +22,30 @@ webpack跟其他构建工具本质上不同之处在于：```webpack是从入口
 
 当然，Webpack还可以轻松的解决传统构建工具解决的问题：
 
-* 模块化打包，一切皆模块，JS是模块，CSS等也是模块；
-* 语法糖转换：比如ES6转ES5、TypeScript；
-* 预处理器编译：比如Less、Sass等；
-* 项目优化：比如压缩、CDN；
-* 解决方案封装：通过强大的Loader和插件机制，可以完成解决方案的封装，比如PWA；
-* 流程对接：比如测试流程、语法检测等。
+* ```模块化打包```：一切皆模块，JS是模块，CSS等也是模块；
+* ```语法糖转换```：比如ES6转ES5、TypeScript；
+* ```预处理器编译```：比如Less、Sass等；
+* ```项目优化```：比如压缩、CDN；
+* ```解决方案封装```：通过强大的Loader和插件机制，可以完成解决方案的封装，比如PWA；
+* ```流程对接```：比如测试流程、语法检测等。
 
 ## Webpack 常见名词解释
 
-* entry：项目入口
-* module：开发中每一个文件都可以看做 module，模块不局限于 js，也包含 css、图片等
-* chunk：代码块，一个 chunk 可以由多个模块组成
-* loader：模块转化器，模块的处理器，对模块进行转换处理
-* plugin：扩展插件，插件可以处理 chunk，也可以对最后的打包结果进行处理，可以完成 loader 完不成的任务
-* bundle：最终打包完成的文件，一般就是和 chunk 一一对应的关系，bundle 就是对 chunk 进行压缩打包等处理后的产出
+* ```entry```：项目入口
+* ```module```：开发中每一个文件都可以看做 module，模块不局限于 js，也包含 css、图片等
+* ```chunk```：代码块，一个 chunk 可以由多个模块组成
+* ```loader```：模块转化器，模块的处理器，对模块进行转换处理
+* ```plugin```：扩展插件，插件可以处理 chunk，也可以对最后的打包结果进行处理，可以完成 loader 完不成的任务
+* ```bundle```：最终打包完成的文件，一般就是和 chunk 一一对应的关系，bundle 就是对 chunk 进行压缩打包等处理后的产出
 
 ## Webpack 目前支持的占位符
 
-* [hash]：模块标识符的 hash
-* [chunkhash]：chunk 内容的 hash
-* [name]：模块名称
-* [id]：模块标识符
-* [query]：模块的 query，例如，文件名 ? 后面的字符串
-* [function]：一个 return 出一个 string 作为 filename 的函数
+* ```[hash]```：模块标识符的 hash
+* ```[chunkhash]```：chunk 内容的 hash
+* ```[name]```：模块名称
+* ```[id]```：模块标识符
+* ```[query]```：模块的 query，例如，文件名 ? 后面的字符串
+* ```[function]```：一个 return 出一个 string 作为 filename 的函数
 
   ```[hash]```：是```整个项目```的 hash 值，其根据每次编译内容计算得到，每次编译之后都会生成新的 hash，即修改任何文件都会导致所有文件的 hash 发生改变；在一个项目中虽然入口不同，但是 hash 是相同的；hash 无法实现前端静态资源在浏览器上长缓存，这时候应该使用 chunkhash；
 
@@ -66,11 +66,11 @@ Webpack不仅仅支持js配置，还支持ts（TypeScript）、CoffeeScript甚�
 
 ## Entry
 
-支持多种类型，包括字符串、对象、数组。从作用上来说，包括了```单文件入口```和```多文件入口```两种方式。指示 webpack 应该使用哪个模块，来作为构建其内部依赖图的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的。每个依赖项随即被处理，最后输出到称之为 bundles 的文件中 [了解更多](https://webpack.js.org/concepts/entry-points)<br>
+支持多种类型，包括```字符串、对象、数组```。从作用上来说，包括了```单文件入口```和```多文件入口```两种方式。指示 webpack 应该使用哪个模块，来作为构建其内部依赖图的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的。每个依赖项随即被处理，最后输出到称之为 bundles 的文件中 [了解更多](https://webpack.js.org/concepts/entry-points)<br>
 
-单文件入口：可以快速创建一个只有单一文件入口的情况，例如```library```的封装，但是单文件入口的方式相对来说比较简单，在扩展配置的时候灵活性较低。
+```单文件入口```：可以快速创建一个只有单一文件入口的情况，例如```library```的封装，但是单文件入口的方式相对来说比较简单，在扩展配置的时候灵活性较低。
 
-多文件入口：是使用对象语法来通过支持多个```entry```，多文件入口的对象语法相对于单文件入口，具有较高的灵活性，例如多页应用、页面模块分离优化。
+```多文件入口```：是使用对象语法来通过支持多个```entry```，多文件入口的对象语法相对于单文件入口，具有较高的灵活性，例如多页应用、页面模块分离优化。
 
 Tips：对于一个HTML页面，我们推荐只有一个```entry```，通过统一的入口，解析出来的依赖关系更方便管理和维护。
 
@@ -80,11 +80,11 @@ Tips：对于一个HTML页面，我们推荐只有一个```entry```，通过统�
 
 output的常用属性是：
 
-* path：此选项制定了输出的bundle存放的路径，比如dist、output等
-* filename：这个是bundle的名称
-* publicPath：指定了一个在浏览器中被引用的URL地址。这种做法在需要将静态文件放在不同的域名或者 CDN 上面的时候是很有用的。
-* library：如果我们打包的目的是生成一个供别人使用的库，那么可以使用```output.library```来指定库的名称，库的名称支持占位符和普通字符串：
-* libraryTarget：确定了库的名称之后，还可以使用```output.libraryTarget```指定库打包出来的规范，output.libraryTarget取值范围为：var、assign、this、window、global、commonjs、commonjs2、commonjs-module、amd、umd、umd2、jsonp，默认是var。
+* ```path```：此选项制定了输出的bundle存放的路径，比如dist、output等
+* ```filename```：这个是bundle的名称
+* ```publicPath```：指定了一个在浏览器中被引用的URL地址。这种做法在需要将静态文件放在不同的域名或者 CDN 上面的时候是很有用的。
+* ```library```：如果我们打包的目的是生成一个供别人使用的库，那么可以使用```output.library```来指定库的名称，库的名称支持占位符和普通字符串：
+* ```libraryTarget```：确定了库的名称之后，还可以使用```output.libraryTarget```指定库打包出来的规范，output.libraryTarget取值范围为：var、assign、this、window、global、commonjs、commonjs2、commonjs-module、amd、umd、umd2、jsonp，默认是var。
 
 output输出相关的三个配置项：externals，target和devtool。
 
@@ -96,13 +96,13 @@ output输出相关的三个配置项：externals，target和devtool。
 
 string类型支持下面的七种：
 
-* web：默认，编译为类浏览器环境里可用；
-* node：编译为类Node.js环境可用（使用Node.jsrequire加载chunk）；
-* async-node：编译为类Node.js环境可用（使用fs和vm异步加载分块）；
-* electron-main：编译为Electron主进程；
-* electron-renderer：编译为Electron渲染进程；
-* node-webkit：编译为Webkit可用，并且使用jsonp去加载分块。支持Node.js内置模块和nw.gui导入（实验性质）；
-* webworker：编译成一个WebWorker。
+* ```web```：默认，编译为类浏览器环境里可用；
+* ```node```：编译为类Node.js环境可用（使用Node.jsrequire加载chunk）；
+* ```async-node```：编译为类Node.js环境可用（使用fs和vm异步加载分块）；
+* ```electron-main```：编译为Electron主进程；
+* ```electron-renderer```：编译为Electron渲染进程；
+* ```node-webkit```：编译为Webkit可用，并且使用jsonp去加载分块。支持Node.js内置模块和nw.gui导入（实验性质）；
+* ```webworker```：编译成一个WebWorker。
 
 除了string类型，target还支持function类型，这个函数接收一个```compiler```作为参数
 
@@ -131,8 +131,8 @@ Webpack进行构建的时候会从入口文件开始（entry）遍历寻找各�
 * ```module.rules```：是在处理模块时，将符合规则条件的模块，提交给对应的处理器来处理，通常用来配置loader，其类型是一个数组，数组里每一项都描述了如何去处理部分文件。每一项rule大致可以由以下三部分组成：
   * 条件匹配：通过```test、include、exclude```等配置来命中可以应用规则的模块文件；
     * 条件匹配相关的配置有```test、include、exclude、resource、resourceQuery和issuer```。条件匹配的对象包括三类：resource，resourceQuery和issuer。
-      * resource：请求文件的绝对路径。它已经根据resolve规则解析；
-      * issuer：被请求资源（requested+the+resource）的模块文件的绝对路径，即导入时的位置。
+      * ```resource```：请求文件的绝对路径。它已经根据resolve规则解析；
+      * ```issuer```：被请求资源（requested+the+resource）的模块文件的绝对路径，即导入时的位置。
     * 举例来说明：从app.js导入'./style.css?inline'：
       * resource是/path/to/style.css；
       * resourceQuery是?之后的inline；
@@ -160,24 +160,24 @@ loader有两种配置方式：
 
 给loader传参的方式有两种：
 
-* 通过options传入
-* 通过query的方式传入：loader:'html-loader?minimize=true&removeComments=false&collapseWhitespace=false'
+* ```通过options传入```
+* ```通过query的方式传入```：loader:'html-loader?minimize=true&removeComments=false&collapseWhitespace=false'
 
 常用的loader：
 
-* file-loader：打包图片资源，字体等文件.  [了解更多](https://webpack.js.org/loaders/file-loader)<br>
-* url-loader：功能类似于 file-loader，但是在文件大小（单位 byte）低于指定的限制时，可以返回一个 DataURL，图片资源较小时适合使用url-loader，可以减少http请求，图片过大会导致打包生成的js文件过大，导致页面加载慢  [了解更多](https://webpack.js.org/loaders/url-loader)<br>
-* css-loader：处理文件中@import 的特点,处理css文件  [了解更多](https://webpack.js.org/loaders/css-loader)<br>
-* style-loader：将解析的css内容用style标签的形式挂载到页面  [了解更多](https://webpack.js.org/loaders/style-loader)<br>
-* less-loader：将less文件编译为css文件  [了解更多](https://www.webpackjs.com/loaders/less-loader)<br>
-* postcss-loader：自动添加浏览器前缀  [了解更多](https://webpack.js.org/loaders/postcss-loader)<br>
+* ```file-loader```：打包图片资源，字体等文件.  [了解更多](https://webpack.js.org/loaders/file-loader)<br>
+* ```url-loader```：功能类似于 file-loader，但是在文件大小（单位 byte）低于指定的限制时，可以返回一个 DataURL，图片资源较小时适合使用url-loader，可以减少http请求，图片过大会导致打包生成的js文件过大，导致页面加载慢  [了解更多](https://webpack.js.org/loaders/url-loader)<br>
+* ```css-loader```：处理文件中@import 的特点,处理css文件  [了解更多](https://webpack.js.org/loaders/css-loader)<br>
+* ```style-loader```：将解析的css内容用style标签的形式挂载到页面  [了解更多](https://webpack.js.org/loaders/style-loader)<br>
+* ```less-loader```：将less文件编译为css文件  [了解更多](https://www.webpackjs.com/loaders/less-loader)<br>
+* ```postcss-loader```：自动添加浏览器前缀  [了解更多](https://webpack.js.org/loaders/postcss-loader)<br>
 
 ## Plugins
 插件目的在于解决 loader 无法实现的其他事，让打包的过程更加便捷，可以在webpack运行到某个时刻的时候，帮你做一些事情。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量。Webpack本身就是有很多插件组成的，所以内置了很多插件，我们可以直接通过webpack对象的属性来直接使用，例如：webpack.optimize.UglifyJsPlugin。 [了解更多](https://webpack.js.org/concepts/plugins)<br>
-* html-webpack-plugin：打包之后自动生成一个 HTML 文件， 并把打包生成的js文件自动引入到这个html文件中  [了解更多](https://webpack.js.org/loaders/file-loader)<br>
-* clean-webpack-plugin：用于打包之前，删除/清除构建文件夹  [了解更多](https://www.npmjs.com/package/clean-webpack-plugin)<br>
-* HotModuleReplacementPlugin：启用热替换模块(Hot Module Replacement)，也被称为 HMR，实时预览修改后的页面，无需重新加载整个页面  [了解更多](https://webpack.js.org/plugins/hot-module-replacement-plugin)  [API调用](https://webpack.js.org/api/hot-module-replacement)<br> 
-* ProvidePlugin：自动加载模块，而不必到处 import 或 require  [了解更多](https://webpack.js.org/plugins/provide-plugin)<br> 
+* ```html-webpack-plugin```：打包之后自动生成一个 HTML 文件， 并把打包生成的js文件自动引入到这个html文件中  [了解更多](https://webpack.js.org/loaders/file-loader)<br>
+* ```clean-webpack-plugin```：用于打包之前，删除/清除构建文件夹  [了解更多](https://www.npmjs.com/package/clean-webpack-plugin)<br>
+* ```HotModuleReplacementPlugin```：启用热替换模块(Hot Module Replacement)，也被称为 HMR，实时预览修改后的页面，无需重新加载整个页面  [了解更多](https://webpack.js.org/plugins/hot-module-replacement-plugin)  [API调用](https://webpack.js.org/api/hot-module-replacement)<br> 
+* ```ProvidePlugin```：自动加载模块，而不必到处 import 或 require  [了解更多](https://webpack.js.org/plugins/provide-plugin)<br> 
 
 Tips：```loader```面向的是解决某个或者某类模块的问题，而```plugin```面向的是项目整体，解决的是```loader```解决不了的问题。
 
@@ -186,15 +186,15 @@ Tips：```loader```面向的是解决某个或者某类模块的问题，而```p
 
 ## devtool
 此选项控制是否生成，以及如何生成 source-map [了解更多](https://webpack.js.org/configuration/devtool)<br>
-* source-map：定义源码以及打包后的代码的映射关系，通过 sourcemap 我们可以快速还原代码的错误位置。 [介绍](https://blog.teamtreehouse.com/introduction-source-maps)<br>
+* ```source-map```：定义源码以及打包后的代码的映射关系，通过 sourcemap 我们可以快速还原代码的错误位置。 [介绍](https://blog.teamtreehouse.com/introduction-source-maps)<br>
 
 ## devServer
 webpack-dev-server 能够用于快速开发应用程序，会将打包后的文件保存在内存中，不会放在指定文件夹，从而提升打包速度 [了解更多](https://webpack.js.org/configuration/dev-server/)<br>
 每次要编译代码时，手动运行 npm run build 就会变得很麻烦。webpack 中有几个不同的选项，可以帮助你在代码发生变化后自动编译代码：<br>
 
-* webpack's Watch Mode [了解更多](https://webpack.js.org/guides/development/#using-watch-mode)<br>
-* webpack-dev-server [了解更多](https://webpack.js.org/guides/development/#using-webpack-dev-server)<br>
-* webpack-dev-middleware [了解更多](https://webpack.js.org/guides/development/#using-webpack-dev-middleware)<br>
+* ```webpack's Watch Mode``` [了解更多](https://webpack.js.org/guides/development/#using-watch-mode)<br>
+* ```webpack-dev-server``` [了解更多](https://webpack.js.org/guides/development/#using-webpack-dev-server)<br>
+* ```webpack-dev-middleware``` [了解更多](https://webpack.js.org/guides/development/#using-webpack-dev-middleware)<br>
 
 
 
@@ -203,14 +203,14 @@ webpack-dev-server 能够用于快速开发应用程序，会将打包后的文�
 **Babel <br>**
 Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中 [了解更多](https://babeljs.io/docs/en/)<br><br>
 [让Babel与你所使用的工具协同工作](https://babeljs.io/setup)<br>
-* babel-loader：结合webpack实现es6语法转化 <br>
-* babel/core：Babel核心库，babel-loader内部会调用@babel/core进行转化 <br>
-* babel-preset-env：包含es6、7等版本的语法转化规则 [了解更多](https://babeljs.io/docs/en/babel-preset-env)<br>
-* babel-polyfill：Babel默认只转换新的JavaScript句法（syntax），而不转换新的API，比如Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象，以及一些定义在全局对象上的方法（比如Object.assign）都不会转码。举例来说，ES6在Array对象上新增了Array.from方法。Babel就不会转码这个方法。如果想让这个方法运行，必须使用babel-polyfill，为当前环境提供一个垫片 [了解更多](https://babeljs.io/docs/en/babel-polyfill)<br>
-* babel-polyfill缺点：<br>
+* ```babel-loader```：结合webpack实现es6语法转化 <br>
+* ```babel/core```：Babel核心库，babel-loader内部会调用@babel/core进行转化 <br>
+* ```babel-preset-env```：包含es6、7等版本的语法转化规则 [了解更多](https://babeljs.io/docs/en/babel-preset-env)<br>
+* ```babel-polyfill```：Babel默认只转换新的JavaScript句法（syntax），而不转换新的API，比如Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象，以及一些定义在全局对象上的方法（比如Object.assign）都不会转码。举例来说，ES6在Array对象上新增了Array.from方法。Babel就不会转码这个方法。如果想让这个方法运行，必须使用babel-polyfill，为当前环境提供一个垫片 [了解更多](https://babeljs.io/docs/en/babel-polyfill)<br>
+* ```babel-polyfill缺点```：<br>
     1：可能会增加很多根本没有用到的polyfill；[useBuiltIns 解决方法](https://babeljs.io/docs/en/babel-preset-env#usebuiltins)<br>
     2：可能会污染子模块的局部作用域，严重的或许会导致冲突，旨在用于应用程序，业务逻辑而不是库/工具；<br>
-* babel/plugin-transform-runtime：将开发者依赖的全局内置对象等，抽取成单独的模块，并通过模块导入的方式引入，避免了对全局作用域的修改（污染），同时能按需注入polyfill；[了解更多](https://babeljs.io/docs/en/babel-plugin-transform-runtime)<br>
+* ```babel/plugin-transform-runtime```：将开发者依赖的全局内置对象等，抽取成单独的模块，并通过模块导入的方式引入，避免了对全局作用域的修改（污染），同时能按需注入polyfill；[了解更多](https://babeljs.io/docs/en/babel-plugin-transform-runtime)<br>
 
 ## 打包React代码
 
@@ -220,7 +220,7 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
 
 移除 JavaScript 上下文中的未引用代码；基于 ES6 的[静态引用]，tree shaking 通过扫描所有 ES6 的 export，找出被 import 的内容并添加到最终代码中。 webpack 的实现是把所有 import 标记为有使用/无使用两种，在后续压缩时进行区别处理。源码必须遵循 ES6 的模块规范 (import & export)，如果是 CommonJS 规范 (require) 则无法使用 [了解更多](https://webpack.js.org/guides/tree-shaking)<br>
 
-* sideEffects：如果我们引入的 包/模块 被标记为 sideEffects: false 了，那么不管它是否真的有副作用，只要它没有被调用，整个 模块/包 都会被完整的移除 [演示代码](./tree_shaking)<br>
+* ```sideEffects```：如果我们引入的 包/模块 被标记为 sideEffects: false 了，那么不管它是否真的有副作用，只要它没有被调用，整个 模块/包 都会被完整的移除 [演示代码](./tree_shaking)<br>
 
 ## 区分生产环境/开发环境
 
@@ -229,34 +229,34 @@ Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转�
 ## Code Splitting 代码分割
 代码分离是 webpack 中最引人注目的特性之一。此特性能够把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件。代码分离可以用于获取更小的 bundle，以及控制资源加载优先级，如果使用合理，会极大影响加载时间 [了解更多](https://webpack.js.org/guides/code-splitting) [演示代码](./code_splitting)<br>
 webpack中实现代码分割，两种方式<br>
-* 同步代码： 只需要在配置文件中中做optimization的配置即可<br>
-* 异步代码(import): 异步代码，无需做任何配置，会自动进行代码分割，放置到新的文件中<br><br>
+* ```同步代码```： 只需要在配置文件中中做optimization的配置即可<br>
+* ```异步代码(import)```: 异步代码，无需做任何配置，会自动进行代码分割，放置到新的文件中<br><br>
     
 有三种常用的代码分离方法：<br>
 
-* 入口起点：使用 entry 配置手动地分离代码。 [了解更多](https://webpack.js.org/guides/code-splitting/#entry-points)<br> 
+* ```入口起点```：使用 entry 配置手动地分离代码。 [了解更多](https://webpack.js.org/guides/code-splitting/#entry-points)<br> 
     这种方法存在一些问题:<br>
     * 如果入口 chunks 之间包含重复的模块，那些重复模块都会被引入到各个 bundle 中。<br>
     * 这种方法不够灵活，并且不能将核心应用程序逻辑进行动态拆分代码。<br>
 * 防止重复：使用 SplitChunksPlugin 去重和分离 chunk。 [了解更多](https://webpack.js.org/plugins/split-chunks-plugin/)<br>
-    * chunks：表示从哪些chunks里面抽取代码，除了三个可选字符串值 initial、async、all 之外，还可以通过函数来过滤所需的 chunks。<br>
-    * minSize：表示抽取出来的文件在压缩前的最小大小，默认为30000，需要进行代码分离的代码块要大于30000，否则不生成新chunk。<br>
-    * maxSize：表示抽取出来的文件在压缩前的最大大小，默认为 0，表示不限制最大大小。<br>
-    * minChunks：表示module在打包后的chunks（打包后的代码文件）中被引用的次数，默认为1，大于等于该次数才会进行代码分割<br>
-    * maxAsyncRequests：最大的按需(异步)加载次数，默认为 5，超过该值，其他的module不会进行代码分割<br>
-    * maxInitialRequests：入口文件最大的初始化加载次数，默认为 3，超过该值，其他的module不会进行代码分割<br>
-    * automaticNameDelimiter：分割出来的文件的自动生成名字的分割符，默认为 ~<br>
-    * name：chunk的名字，如果设成true，会根据被提取的chunk自动生成。<br>
-    * cacheGroups： 缓存组才是我们配置的关键。它可以继承/覆盖上面 splitChunks 中所有的参数值，除此之外还额外提供了三个配置，分别为：test, priority 和 reuseExistingChunk。要禁用默认缓存组，请将default设置为false。<br>
-        * test：用来决定提取哪些module，默认为所有的 modules，可匹配模块路径或 chunk 名字，当匹配的是 chunk 名字的时候，其里面的所有 modules 都会选中。<br>
-        * priority：表示抽取权重，数字越大表示优先级越高。因为一个 module 可能会满足多个 cacheGroups 的条件，分割到priority高的cacheGroups<br>
-        * reuseExistingChunk: 表示是否使用已有的 chunk，如果为 true 则表示如果当前的 chunk 包含的模块已经被抽取出去了，那么将不会重新生成新的.<br>
-* 动态导入：通过模块的内联函数调用来分离代码。 [了解更多](https://webpack.js.org/guides/code-splitting/#dynamic-imports)<br> 
+    * ```chunks```：表示从哪些chunks里面抽取代码，除了三个可选字符串值 initial、async、all 之外，还可以通过函数来过滤所需的 chunks。<br>
+    * ```minSize```：表示抽取出来的文件在压缩前的最小大小，默认为30000，需要进行代码分离的代码块要大于30000，否则不生成新chunk。<br>
+    * ```maxSize```：表示抽取出来的文件在压缩前的最大大小，默认为 0，表示不限制最大大小。<br>
+    * ```minChunks```：表示module在打包后的chunks（打包后的代码文件）中被引用的次数，默认为1，大于等于该次数才会进行代码分割<br>
+    * ```maxAsyncRequests```：最大的按需(异步)加载次数，默认为 5，超过该值，其他的module不会进行代码分割<br>
+    * ```maxInitialRequests```：入口文件最大的初始化加载次数，默认为 3，超过该值，其他的module不会进行代码分割<br>
+    * ```automaticNameDelimiter```：分割出来的文件的自动生成名字的分割符，默认为 ~<br>
+    * ```name```：chunk的名字，如果设成true，会根据被提取的chunk自动生成。<br>
+    * ```cacheGroups```： 缓存组才是我们配置的关键。它可以继承/覆盖上面 splitChunks 中所有的参数值，除此之外还额外提供了三个配置，分别为：```test, priority 和 reuseExistingChunk```。要禁用默认缓存组，请将default设置为false。<br>
+        * ```test```：用来决定提取哪些module，默认为所有的 modules，可匹配模块路径或 chunk 名字，当匹配的是 chunk 名字的时候，其里面的所有 modules 都会选中。<br>
+        * ```priority```：表示抽取权重，数字越大表示优先级越高。因为一个 module 可能会满足多个 cacheGroups 的条件，分割到priority高的cacheGroups<br>
+        * ```reuseExistingChunk```: 表示是否使用已有的 chunk，如果为 true 则表示如果当前的 chunk 包含的模块已经被抽取出去了，那么将不会重新生成新的.<br>
+* ```动态导入```：通过模块的内联函数调用来分离代码。 [了解更多](https://webpack.js.org/guides/code-splitting/#dynamic-imports)<br> 
 
 ## css文件代码分割
 注意：对css代码进行代码分割，需要配置sideEffects，消除tree shaking的影响  如果sideEffects：false，css代码会被过滤掉
-* MiniCssExtractPlugin：将CSS提取为独立的文件的插件，对每个包含css的js文件都会创建一个CSS文件，支持按需加载css和sourceMap [了解更多](https://webpack.js.org/plugins/mini-css-extract-plugin) <br>
-* OptimizeCSSAssetsPlugin：css代码压缩优化，[了解更多](https://github.com/NMFR/optimize-css-assets-webpack-plugin)<br>
+* ```MiniCssExtractPlugin```：将CSS提取为独立的文件的插件，对每个包含css的js文件都会创建一个CSS文件，支持按需加载css和sourceMap [了解更多](https://webpack.js.org/plugins/mini-css-extract-plugin) <br>
+* ```OptimizeCSSAssetsPlugin```：css代码压缩优化，[了解更多](https://github.com/NMFR/optimize-css-assets-webpack-plugin)<br>
 [演示代码](./code_splitting_css)<br>
 
 ## Bundle Analysis 打包分析
@@ -265,16 +265,16 @@ webpack中实现代码分割，两种方式<br>
 ## Prefetching/Preloading 
 Preload是预加载，PreFetch是预测将要加载的模块，这两者都是link标签下的属性 [了解更多](https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247485614&amp;idx=1&amp;sn=b25bac7cfbb02bdcab76b41f10a4bffb&source=41#wechat_redirect) [使用](https://webpack.js.org/guides/code-splitting/#prefetchingpreloading-modules) [演示代码](./prefetching_preloading)<br><br>
 Preload优先级比PreFetch高。这两者是有区别的：<br>
-* preload：主要是用于当前页面的预加载，会和主文件bundle.js并行下载，且优先获取，可用于预加载某些必要模块<br>
-* prefetch: 主要是用于下一步操作或者页面，会在浏览器空闲时间才去下载，优先级低<br>
+* ```preload```：主要是用于当前页面的预加载，会和主文件bundle.js并行下载，且优先获取，可用于预加载某些必要模块<br>
+* ```prefetch```: 主要是用于下一步操作或者页面，会在浏览器空闲时间才去下载，优先级低<br>
 
 ## Lazy Loading 懒加载
 懒加载或者按需加载，是一种很好的优化网页或应用的方式。这种方式实际上是先把你的代码在一些逻辑断点处分离开，然后在一些代码块中完成某些操作后，立即引用或即将引用另外一些新的代码块。这样加快了应用的初始加载速度，减轻了它的总体体积，因为某些代码块可能永远不会被加载。 [了解更多](https://webpack.js.org/guides/lazy-loading) [演示代码](./lazy_loading)<br>
 
 ## Caching 缓存
 我们使用 webpack 来打包我们的模块化后的应用程序，webpack 会生成一个可部署的 /dist 目录，然后把打包后的内容放置在此目录中。只要 /dist 目录中的内容部署到服务器上，客户端（通常是浏览器）就能够访问网站此服务器的网站及其资源。而最后一步获取资源是比较耗费时间的，这就是为什么浏览器使用一种名为 缓存 的技术。可以通过命中缓存，以降低网络流量，使网站加载速度更快，然而，如果我们在部署新版本时不更改资源的文件名，浏览器可能会认为它没有被更新，就会使用它的缓存版本。由于缓存的存在，当你需要获取新的代码时，就会显得很棘手。通过必要的配置，以确保 webpack 编译生成的文件能够被客户端缓存，而在文件内容变化后，能够请求到新的文件 [了解更多](https://webpack.js.org/guides/caching) [演示代码](./caching)<br>
-* contenthash：根据文件的内容添加唯一的哈希。当文件的内容发生变化时，contenthash也会发生变化<br>
-* runtimeChunk：解决老版本webpack打包时，文件内容没有变化但是contenthash变化bug <br>
+* ```contenthash```：根据文件的内容添加唯一的哈希。当文件的内容发生变化时，contenthash也会发生变化<br>
+* ```runtimeChunk```：解决老版本webpack打包时，文件内容没有变化但是contenthash变化bug <br>
 
 ## Authoring Libraries 打包库
 除了打包应用程序代码，webpack 还可以用于打包 JavaScript library。 [了解更多](https://webpack.js.org/guides/author-libraries) [演示代码](./library)<br>
@@ -316,8 +316,8 @@ webpack 的优化瓶颈，主要是两个方面：
 * 1：跟上技术的迭代（Node，Npm，Yarn）。使用最新的 webpack 版本。我们会经常进行性能优化。保持最新的 Node.js 也能够保证性能。除此之外，保证你的包管理工具 (例如 npm 或者 yarn ) 为最新也能保证性能。较新的版本能够建立更高效的模块树以及提高解析速度<br>
 * 2：将 loaders 应用于最少数的必要模块中。使用include字段仅将loader模块应用在实际需要用其转换的位置中，使用exclude字段排除特定条件。<br>
 * 3：plugin尽可能精简且确保可靠，插件选择要合理，尽量选择官方推荐的性能比较好的插件。<br>
-* 3：[resolve](https://webpack.js.org/configuration/resolve/#root)参数合理[配置](https://webpack.js.org/guides/build-performance#resolving)。<br>
-* 4：使用[ DllPlugin](https://webpack.js.org/plugins/dll-plugin/#root) 将更改不频繁的代码进行单独编译。这将改善引用程序的编译速度，即使它增加了构建过程的复杂性[演示代码](./dll)。<br>
+*4：[resolve](https://webpack.js.org/configuration/resolve/#root)参数合理[配置](https://webpack.js.org/guides/build-performance#resolving)。<br>
+* 5：使用[ DllPlugin](https://webpack.js.org/plugins/dll-plugin/#root) 将更改不频繁的代码进行单独编译。这将改善引用程序的编译速度，即使它增加了构建过程的复杂性[演示代码](./dll)。<br>
 
 [了解更多](https://webpack.js.org/guides/build-performance) <br>
 
