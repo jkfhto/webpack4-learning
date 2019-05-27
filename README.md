@@ -168,7 +168,7 @@ loader有两种配置方式：
 
 * [file-loader](https://webpack.js.org/loaders/file-loader)：打包图片资源，字体等文件. 
 * [url-loader](https://webpack.js.org/loaders/url-loader)：功能类似于 file-loader，但是在文件大小（单位 byte）低于指定的限制时，可以返回一个 DataURL，图片资源较小时适合使用url-loader，可以减少http请求，图片过大会导致打包生成的js文件过大，导致页面加载慢
-* [css-loader]((https://webpack.js.org/loaders/css-loader))：处理文件中@import 的特点,处理css文件
+* [css-loader](https://webpack.js.org/loaders/css-loader)：处理文件中@import 的特点,处理css文件
   * ```modules```：启用/禁用CSS模块化。```CSS Modules```既不是官方标准，也不是浏览器的特性，而是在构建过程中对CSS类名选择器限定作用域的一种方式，如我们的广告样式、某个UI通用弹层SDK这类样式，都需要避免自己的命名跟宿主环境的样式冲突。CSS Modules主要解决的问题有：
     * 解决CSS类都是全局的，容易造成全局污染（样式冲突）；
     * JS和CSS共享类名；
