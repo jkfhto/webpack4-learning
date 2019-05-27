@@ -166,19 +166,41 @@ loader有两种配置方式：
 
 常用的loader：
 
-* ```file-loader```：打包图片资源，字体等文件.  [了解更多](https://webpack.js.org/loaders/file-loader)<br>
-* ```url-loader```：功能类似于 file-loader，但是在文件大小（单位 byte）低于指定的限制时，可以返回一个 DataURL，图片资源较小时适合使用url-loader，可以减少http请求，图片过大会导致打包生成的js文件过大，导致页面加载慢  [了解更多](https://webpack.js.org/loaders/url-loader)<br>
-* ```css-loader```：处理文件中@import 的特点,处理css文件  [了解更多](https://webpack.js.org/loaders/css-loader)<br>
-* ```style-loader```：将解析的css内容用style标签的形式挂载到页面  [了解更多](https://webpack.js.org/loaders/style-loader)<br>
-* ```less-loader```：将less文件编译为css文件  [了解更多](https://www.webpackjs.com/loaders/less-loader)<br>
-* ```postcss-loader```：自动添加浏览器前缀  [了解更多](https://webpack.js.org/loaders/postcss-loader)<br>
+* [file-loader](https://webpack.js.org/loaders/file-loader)：打包图片资源，字体等文件. 
+* [url-loader](https://webpack.js.org/loaders/url-loader)：功能类似于 file-loader，但是在文件大小（单位 byte）低于指定的限制时，可以返回一个 DataURL，图片资源较小时适合使用url-loader，可以减少http请求，图片过大会导致打包生成的js文件过大，导致页面加载慢
+* [css-loader]((https://webpack.js.org/loaders/css-loader))：处理文件中@import 的特点,处理css文件
+  * ```modules```：启用/禁用CSS模块化。```CSS Modules```既不是官方标准，也不是浏览器的特性，而是在构建过程中对CSS类名选择器限定作用域的一种方式，如我们的广告样式、某个UI通用弹层SDK这类样式，都需要避免自己的命名跟宿主环境的样式冲突。CSS Modules主要解决的问题有：
+    * 解决CSS类都是全局的，容易造成全局污染（样式冲突）；
+    * JS和CSS共享类名；
+    * 可以方便的编写出更加健壮和扩展方便的CSS。
+  * ```importLoaders```：这个参数用于配置css-loader作用于@import的资源之前有多少个loader
+* [style-loader](https://webpack.js.org/loaders/style-loader)：将解析的css内容用style标签的形式挂载到页面
+* [less-loader](https://www.webpackjs.com/loaders/less-loader)：将less文件编译为css文件 
+* [postcss-loader](https://webpack.js.org/loaders/postcss-loader)：配置了postcss-loader之后，WebPack就可以使用[PostCSS](https://postcss.org/)来处理CSS了。<br>
+
+## PostCSS
+
+CSS后处理器；通过PostCSS的强大插件系统，不仅可以处理CSS语法，还可以处理CSS预处理器的语法，实现的功能也有很多，包括添加前缀、最新语法转义、压缩等，甚至可以扩展CSS的语言特性。
+
+PostCSS的配置写法有以下三种方式：
+
+* 通过配置文件postcss.config.js，一般放置在项目的根目录下；
+* 通过loader的配置项options；
+* 直接在package.json中添加个postcss属性。
+
+PostCSS常用插件：
+
+* [Autoprefixer](https://github.com/postcss/autoprefixer#options)：这个插件就是给css补齐各种浏览器私有的前缀；
+* [postcss-preset-env](https://preset-env.cssdb.org/)：是跟babel的preset-env类似的功能，通过它可以安心的使用最新的CSS语法来写样式，不用关心浏览器兼容性，浏览器兼容的问题交给了postcss-preset-env和WebPack，在打包构建的时候，会根据不同的配置输出对应支持的CSS文件。postcss-preset-env支持的CSS标准，完全可以媲美CSS预处理器的功能，所以如果对cssnext新的标准比较熟悉，可以直接用新标准来写样式，这样等到浏览器支持新标准之后可以无缝切换到cssnext语法，那么可以直接抛弃CSS预处理器，直接使用cssnext语法来写样式，通过WebPack和postcss-preset-env来构建。
+* [ssnano](https://cssnano.co/)：是一个强大的PostCss插件，在CSS压缩优化中会经常被用到，它有别于常规的CSS压缩工具只是去除空格注释，还支持根据CSS语法解析结果智能压缩代码
 
 ## Plugins
 插件目的在于解决 loader 无法实现的其他事，让打包的过程更加便捷，可以在webpack运行到某个时刻的时候，帮你做一些事情。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量。Webpack本身就是有很多插件组成的，所以内置了很多插件，我们可以直接通过webpack对象的属性来直接使用，例如：webpack.optimize.UglifyJsPlugin。 [了解更多](https://webpack.js.org/concepts/plugins)<br>
-* ```html-webpack-plugin```：打包之后自动生成一个 HTML 文件， 并把打包生成的js文件自动引入到这个html文件中  [了解更多](https://webpack.js.org/loaders/file-loader)<br>
-* ```clean-webpack-plugin```：用于打包之前，删除/清除构建文件夹  [了解更多](https://www.npmjs.com/package/clean-webpack-plugin)<br>
-* ```HotModuleReplacementPlugin```：启用热替换模块(Hot Module Replacement)，也被称为 HMR，实时预览修改后的页面，无需重新加载整个页面  [了解更多](https://webpack.js.org/plugins/hot-module-replacement-plugin)  [API调用](https://webpack.js.org/api/hot-module-replacement)<br> 
-* ```ProvidePlugin```：自动加载模块，而不必到处 import 或 require  [了解更多](https://webpack.js.org/plugins/provide-plugin)<br> 
+
+* [html-webpack-plugin](https://webpack.js.org/loaders/file-loader)：打包之后自动生成一个 HTML 文件， 并把打包生成的js文件自动引入到这个html文件中
+* [clean-webpack-plugin](https://www.npmjs.com/package/clean-webpack-plugin)：用于打包之前，删除/清除构建文件夹
+* [HotModuleReplacementPlugin](https://webpack.js.org/plugins/hot-module-replacement-plugin)：启用热替换模块(Hot Module Replacement)，也被称为 HMR，实时预览修改后的页面，无需重新加载整个页面  [API调用](https://webpack.js.org/api/hot-module-replacement)<br> 
+* [ProvidePlugin](https://webpack.js.org/plugins/provide-plugin)：自动加载模块，而不必到处 import 或 require
 
 Tips：```loader```面向的是解决某个或者某类模块的问题，而```plugin```面向的是项目整体，解决的是```loader```解决不了的问题。
 
@@ -193,9 +215,9 @@ Tips：```loader```面向的是解决某个或者某类模块的问题，而```p
 webpack-dev-server 能够用于快速开发应用程序，会将打包后的文件保存在内存中，不会放在指定文件夹，从而提升打包速度 [了解更多](https://webpack.js.org/configuration/dev-server/)<br>
 每次要编译代码时，手动运行 npm run build 就会变得很麻烦。webpack 中有几个不同的选项，可以帮助你在代码发生变化后自动编译代码：<br>
 
-* ```webpack's Watch Mode``` [了解更多](https://webpack.js.org/guides/development/#using-watch-mode)<br>
-* ```webpack-dev-server``` [了解更多](https://webpack.js.org/guides/development/#using-webpack-dev-server)<br>
-* ```webpack-dev-middleware``` [了解更多](https://webpack.js.org/guides/development/#using-webpack-dev-middleware)<br>
+* [webpack's Watch Mode](https://webpack.js.org/guides/development/#using-watch-mode)
+* [webpack-dev-server](https://webpack.js.org/guides/development/#using-webpack-dev-server)
+* [webpack-dev-middleware](https://webpack.js.org/guides/development/#using-webpack-dev-middleware)
 
 
 
@@ -256,9 +278,9 @@ webpack中实现代码分割，两种方式<br>
 
 ## css文件代码分割
 注意：对css代码进行代码分割，需要配置sideEffects，消除tree shaking的影响  如果sideEffects：false，css代码会被过滤掉
-* ```MiniCssExtractPlugin```：将CSS提取为独立的文件的插件，对每个包含css的js文件都会创建一个CSS文件，支持按需加载css和sourceMap [了解更多](https://webpack.js.org/plugins/mini-css-extract-plugin) <br>
-* ```OptimizeCSSAssetsPlugin```：css代码压缩优化，[了解更多](https://github.com/NMFR/optimize-css-assets-webpack-plugin)<br>
-[演示代码](./code_splitting_css)<br>
+
+* [MiniCssExtractPlugin](https://webpack.js.org/plugins/mini-css-extract-plugin)：将CSS提取为独立的文件的插件，对每个包含css的js文件都会创建一个CSS文件，支持按需加载css和sourceMap
+* [OptimizeCSSAssetsPlugin](https://github.com/NMFR/optimize-css-assets-webpack-plugin)：css代码压缩优化 [演示代码](./code_splitting_css)<br>
 
 ## Bundle Analysis 打包分析
 如果我们以分离代码作为开始，那么就以检查模块作为结束，分析输出结果是很有用处的。[官方分析工具](https://github.com/webpack/analyse) 是一个好的初始选择 [了解更多](https://webpack.js.org/guides/code-splitting/#bundle-analysis)<br>
@@ -302,7 +324,24 @@ externals：配置项用于去除输出的打包文件中依赖的某些第三�
 * Workbox：PWA的JavaScript库集合[了解更多](https://github.com/GoogleChrome/workbox/)
 
 ## TypeScript
+
 [TypeScript](https://www.typescriptlang.org/) 是 JavaScript 的超集，为其增加了类型系统，可以编译为普通的 JavaScript 代码。 [了解更多](https://webpack.js.org/guides/typescript/) [演示代码](./typescript)<br>
+
+## 语法检测
+
+* [ESLint](https://cn.eslint.org/)：是通过配置规则（Rules）来检测JavaScript语法规范的。可以通过ESLint在团队内快速统一ES6的语法，精简产品代码，提高开发效率，另外ESLint的扩展性很好，能够很好的支持JSX语法的检测。业内比较著名的规范有：[Airbnb的JavaScript代码规范](https://github.com/airbnb/javascript)、[JavaScriptStandardStyleGuide](https://github.com/standard/standard)、[GoogleJavaScript代码规范](https://google.github.io/styleguide/jsguide.html)，国内则有百度的[FECS](http://fecs.baidu.com/)
+  
+  Webpack中使用ESLint首先需要安装eslint-loader：然后在webpack.config.js进行配置。
+
+  Tips：ESLint的报错类型包括三种：off、warn和error，分别对应着：0、1、2。
+
+* [StyleLint](https://stylelint.io/)检测CSS语法。StyleLint 和 ESLint 很像，它们都只是提供了工具与规则，如何配置这些规则完全取决于使用者，所以我们要根据需要自己引入或配置规则。StyleLint 的代码风格也有很多社区开源版本，官方推荐的代码风格有两个：
+  * [stylelint-config-recommended](https://github.com/stylelint/stylelint-config-recommended)
+  * [stylelint-config-standard](https://github.com/stylelint/stylelint-config-standard)
+  
+  Tips：除了StyleLint本身之外，还可以安装[stylelint-order](https://github.com/hudochenkov/stylelint-order)插件，该插件的作用是强制我们在写CSS的时候按照某个顺序来编写。例如先写定位，再写盒模型，再写内容区样式，最后写CSS3相关属性。这样可以极大的保证我们代码的可读性和风格统一。
+
+  Webpack中使用StyleLint是通过插件的方式来使用，这个插件的名字是[stylelint-webpack-plugin](https://www.npmjs.com/package/stylelint-webpack-plugin)。
 
 ## webpack-dev-server 
 * devServer.proxy：实现请求转发，如果你有单独的后端开发服务器 API，并且希望在同域名下发送 API 请求 ，那么代理某些 URL 会很有用。dev-server 使用了非常强大的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 包。更多高级用法，请查阅其[文档](https://github.com/chimurai/http-proxy-middleware#options) [演示代码](./proxy)。<br>
