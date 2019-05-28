@@ -359,6 +359,9 @@ webpack 的优化瓶颈，主要是两个方面：
 * 3：plugin尽可能精简且确保可靠，插件选择要合理，尽量选择官方推荐的性能比较好的插件。<br>
 * 4：[resolve](https://webpack.js.org/configuration/resolve/#root)参数合理[配置](https://webpack.js.org/guides/build-performance#resolving)。<br>
 * 5：使用[ DllPlugin](https://webpack.js.org/plugins/dll-plugin/#root) 将更改不频繁的代码进行单独编译。这将改善引用程序的编译速度，即使它增加了构建过程的复杂性[演示代码](./dll)。<br>
+* 6：[IgnorePlugin](https://webpack.js.org/plugins/ignore-plugin)：webpack内置插件,可以忽略第三方包指定目录，让这些指定目录不要被打包进去
+  * moment这个第三方依赖库，该库主要是对时间进行格式化，并且支持多个国家语言。使用IgnorePlugin忽略不需要的语言包，优化打包。
+* 7：[happyPack](https://www.npmjs.com/package/happypack)多线程打包 [演示代码](./happyPack)
 
 [了解更多](https://webpack.js.org/guides/build-performance) <br>
 
