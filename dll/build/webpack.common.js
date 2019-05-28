@@ -18,11 +18,11 @@ const plugins = [
 const files = fs.readdirSync(path.resolve(__dirname, '../dll'));
 files.forEach(file => {
 	if(/.*\.dll.js/.test(file)) {
-		plugins.push(new AddAssetHtmlWebpackPlugin({//将打包的
+		plugins.push(new AddAssetHtmlWebpackPlugin({ //引入对应的动态链接库
 			filepath: path.resolve(__dirname, '../dll', file)
 		}))
 	}
-	if(/.*\.manifest.json/.test(file)) {
+	if (/.*\.manifest.json/.test(file)) { //引入动态链接库对应的清单
 		plugins.push(new webpack.DllReferencePlugin({
 			manifest: path.resolve(__dirname, '../dll', file)
 		}))

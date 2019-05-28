@@ -19,12 +19,12 @@ module.exports = {
 		react: ['react', 'react-dom'],
 		jquery: ['jquery']
 	},
-	output: {
+	output: { //生成动态链接库
 		filename: '[name].dll.js',
 		path: path.resolve(__dirname, '../dll'),
 		library: '[name]'
 	},
-	plugins: [
+	plugins: [ //生成对应的清单
 		new webpack.DllPlugin({
 			name: '[name]',
 			path: path.resolve(__dirname, '../dll/[name].manifest.json'),
